@@ -6,6 +6,7 @@
     </head>
     <body>
         <script>
+            // Load the initial components
             window.fbAsyncInit = function() {
                 FB.init({
                     appId      : '1650600928436459',
@@ -14,11 +15,13 @@
                     version    : 'v7.0'
                 });
 
+                // Called after the Javascript SDK is initialized
                 FB.getLoginStatus(function(response) {
                     statusChangeCallback(response);
                 });
             };
     
+            // Called with the results from FB.getLoginStatus()
             function statusChangeCallback(response) {
                 if (response.status === 'connected') {
                     ShowWelcome();
@@ -28,31 +31,34 @@
                 }
             }
     
+            // Request login Facebook and redirect the page after
             function RequestLoginFB() {
                 window.location = 'http://graph.facebook.com/oauth/authorize?client_id=1650600928436459&scope=public_profile,email&redirect_uri=https://quangroland.github.io/';
             }
     
+            // If the page is not logged in
             function ShowLoginButton() {
-                document.getElementById('btb').setAttribute('style', 'display:block');
-                document.getElementById('lbl').setAttribute('style', 'display:none');
+                document.getElementById('loginButton').setAttribute('style', 'display:block');
+                document.getElementById('welcomeLabel').setAttribute('style', 'display:none');
             }
     
+            // If the page is logged in
             function ShowWelcome() {
-                document.getElementById('btb').setAttribute('style', 'display:none');
-                document.getElementById('lbl').setAttribute('style', 'display:block');
+                document.getElementById('loginButton').setAttribute('style', 'display:none');
+                document.getElementById('welcomeLabel').setAttribute('style', 'display:block');
             }
-    
         </script>
 
 
+        <!-- Initialize the Javascript SDK -->
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0&appId=1650600928436459&autoLogAppEvents=1"
         nonce="Y03H8fUm"></script>
 
 
-        <input id="btb" type="button" value="LOGIN" onclick="RequestLoginFB()" style="display:none" />
-        <p id="lbl" style="display:none">Successfully Login, Welcome!</p>
-        <br/>
+        <!-- Display the page -->
+        <button id="loginButton" onclick="RequestLoginFB()">Login with Facebook</button>
+        <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
     </body>
 </html>
