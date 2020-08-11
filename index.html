@@ -6,68 +6,41 @@
     </head>
     <body>
         <script>
-            // Load the initialization parameters
             window.fbAsyncInit = function() {
                 FB.init({
                     appId      : '1650600928436459',
                     cookie     : true,
                     xfbml      : true,
-                    version    : 'v7.0'
+                    version    : 'v8.0'
                 });
 
-                // Called after the Javascript SDK is initialized
-                checkLoginStatus();
-            };
-
-            // Check the login status of the user
-            function checkLoginStatus() {
                 FB.getLoginStatus(function(response) {
                     statusChangeCallback(response);
                 });
-            }
-    
-            // Called with the results from FB.getLoginStatus()
+            };
+
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            } (document, 'script', 'facebook-jssdk'));
+
             function statusChangeCallback(response) {
                 if (response.status === 'connected') {
-                    ShowWelcome();
+                    console.log('Logged in');
                 }
                 else {
-                    ShowLoginButton();
+                    console.log('Not logged in');
                 }
             }
-    
-            // Request login Facebook and redirect the page after
-            function RequestLoginFB() {
-                window.location = 'http://graph.facebook.com/oauth/authorize?client_id=1650600928436459&scope=public_profile,email&redirect_uri=https://quangroland.github.io/';
-            }
-    
-            // If the page is not logged in
-            function ShowLoginButton() {
-                document.getElementById('loginButton').setAttribute('style', 'display:block');
-                document.getElementById('welcomeLabel').setAttribute('style', 'display:none');
-            }
-    
-            // If the page is logged in
-            function ShowWelcome() {
-                document.getElementById('loginButton').setAttribute('style', 'display:none');
-                document.getElementById('welcomeLabel').setAttribute('style', 'display:block');
-            }
 
-            function toMain() {
-                window.location = "main.html";
-            }
+            
         </script>
 
 
-        <!-- Initialize the Javascript SDK for Facebook API -->
-        <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0&appId=1650600928436459&autoLogAppEvents=1"
-        nonce="Y03H8fUm"></script>
-
-
         <!-- Display the page -->
-        <button id="loginButton" onclick="RequestLoginFB()">Login with Facebook</button>
-        <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
+        
     </body>
 </html>
