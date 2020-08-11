@@ -14,11 +14,11 @@
                     version    : 'v8.0'
                 });
 
-                FB.getLoginStatus(function(response) {
-                    statusChangeCallback(response);
-                });
+                // Called when loading the page
+                checkLoginState();
             };
 
+            // Initialize the Javascript SDK for Facebook API
             (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) {return;}
@@ -27,20 +27,47 @@
                 fjs.parentNode.insertBefore(js, fjs);
             } (document, 'script', 'facebook-jssdk'));
 
+            // Check login state
+            function checkLoginState() {
+                FB.getLoginStatus(function(response) {
+                    statusChangeCallback(response);
+                });
+            }
+
+            // Called with the results from FB.getLoginStatus()
             function statusChangeCallback(response) {
                 if (response.status === 'connected') {
                     console.log('Logged in');
+                    displayElements(true);
                 }
                 else {
-                    console.log('Not logged in');
+                    console.log('Not Logged in');
+                    displayElements(false);
+                }
+            }
+
+            // Display the page elements based on the login state
+            function displayElements(isLoggedIn) {
+                if (isLoggedIn) {
+                    document.getElementById('loginButton').setAttribute('style', 'display:none');
+                    document.getElementById('welcomeLabel').setAttribute('style', 'display:block');
+                }
+                else {
+                    document.getElementById('loginButton').setAttribute('style', 'display:block');
+                    document.getElementById('welcomeLabel').setAttribute('style', 'display:none');
                 }
             }
 
             
         </script>
 
+        <!-- Display the page elements -->
+        <fb:login-button
+            id="loginButton"
+            scope="public_profile,email"
+            onlogin="checkLoginState();">
+        </fb:login-button>
 
-        <!-- Display the page -->
-        
+        <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
     </body>
 </html>
