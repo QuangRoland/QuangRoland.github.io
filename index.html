@@ -6,7 +6,7 @@
     </head>
     <body>
         <script>
-            // Load the initial components
+            // Load the initialization parameters
             window.fbAsyncInit = function() {
                 FB.init({
                     appId      : '1650600928436459',
@@ -50,15 +50,26 @@
         </script>
 
 
-        <!-- Initialize the Javascript SDK -->
+        <!-- Initialize the Javascript SDK for Facebook API -->
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0&appId=1650600928436459&autoLogAppEvents=1"
         nonce="Y03H8fUm"></script>
 
 
+        <!-- Initialize the Javascript SDK for Login Button -->
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=1650600928436459&autoLogAppEvents=1"
+        nonce="B9v06p1e"></script>
+
+
         <!-- Display the page -->
         <button id="loginButton" onclick="RequestLoginFB()">Login with Facebook</button>
         <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
+
+        <div class="fb-login-button" data-size="large" data-button-type="login_with"
+        data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"
+        data-width="" onclick="RequestLoginFB()"></div>
     </body>
 </html>
