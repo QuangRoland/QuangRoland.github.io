@@ -18,7 +18,7 @@
                 checkLoginState();
             };
 
-            // Initialize the Javascript SDK for Facebook API
+            // Initialize the Javascript SDK
             (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) {return;}
@@ -61,12 +61,22 @@
             
         </script>
 
+        <!-- Initialize the Javascript SDK -->
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=1650600928436459&autoLogAppEvents=1"
+            nonce="4unlaWDy">
+        </script>
+
         <!-- Display the page elements -->
-        <fb:login-button
-            id="loginButton"
-            scope="public_profile,email"
-            onlogin="checkLoginState();">
-        </fb:login-button>
+        <div class="fb-login-button"
+            data-size="large"
+            data-button-type="login_with"
+            data-layout="default"
+            data-auto-logout-link="true"
+            data-use-continue-as="false"
+            data-width="">
+        </div>
 
         <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
     </body>
