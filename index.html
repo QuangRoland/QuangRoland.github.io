@@ -38,7 +38,7 @@
     
             // Request login Facebook and redirect the page after
             function RequestLoginFB() {
-                window.location = 'http://graph.facebook.com/oauth/authorize?client_id=1650600928436459&scope=public_profile,email&redirect_uri=https://quangroland.github.io/';
+                window.location = 'http://graph.facebook.com/oauth/authorize?client_id=1650600928436459&scope=public_profile,email&redirect_uri=https://quangroland.github.io/main.html';
             }
     
             // If the page is not logged in
@@ -68,8 +68,5 @@
 
         <!-- Display the page -->
         <button id="loginButton" onclick="RequestLoginFB()">Login with Facebook</button>
-        <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
-
-        <button onclick="toMain()">To Main</button>
     </body>
 </html>
