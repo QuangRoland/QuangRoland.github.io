@@ -49,11 +49,11 @@
             // Display the page elements based on the login state
             function displayElements(isLoggedIn) {
                 if (isLoggedIn) {
-                    //document.getElementById('loginButton').setAttribute('style', 'display:none');
+                    document.getElementById('loginButton').setAttribute('style', 'display:none');
                     document.getElementById('welcomeLabel').setAttribute('style', 'display:block');
                 }
                 else {
-                    //document.getElementById('loginButton').setAttribute('style', 'display:block');
+                    document.getElementById('loginButton').setAttribute('style', 'display:block');
                     document.getElementById('welcomeLabel').setAttribute('style', 'display:none');
                 }
             }
@@ -62,12 +62,13 @@
         </script>
 
         <!-- Display the page elements -->
-        <fb:login-button
+        <div class="fb-login-button"
             id="loginButton"
             scope="public_profile,email"
             onlogin="checkLoginState();">
-        </fb:login-button>
+        </div>
 
         <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
+
     </body>
 </html>
