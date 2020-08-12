@@ -33,11 +33,10 @@
                     version    : 'v8.0'
                 });
 
-                // Called when loading the page
                 checkLoginState();
             };
 
-            // Initialize the Javascript SDK
+            // Javascript SDK for Facebook API
             (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) {return;}
@@ -70,18 +69,35 @@
                 if (isLoggedIn) {
                     document.getElementById('loginButton').setAttribute('style', 'display:none');
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
-                    document.getElementById('welcomeLabel').setAttribute('style', 'display:block');
+                    document.getElementById('userProfile').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('loginButton').setAttribute('style', 'display:block');
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
-                    document.getElementById('welcomeLabel').setAttribute('style', 'display:none');
+                    document.getElementById('userProfile').setAttribute('style', 'display:none');
                 }
             }
 
+            // Logout
             function logout() {
                 FB.logout(function(response) {
                     checkLoginState();
+                });
+            }
+
+            // Get user profile
+            function getUserProfile() {
+                FB.api('/me', 'GET', {"fields":"id,name,birthday,email"}, function(response) {
+                    let userProfile = `
+                        <h3>User Profile</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">ID: ${response.id}</li>
+                            <li class="list-group-item">Name: ${response.name}</li>
+                            <li class="list-group-item">Birthday: ${response.birthday}</li>
+                            <li class="list-group-item">Email: ${response.email}</li>
+                        </ul>
+                    `;
+                    document.getElementById('userProfile').innerHTML = userProfile;
                 });
             }
 
@@ -90,24 +106,27 @@
 
         <!-- Navigation bar -->
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <!-- Home Button -->
             <a class="navbar-brand" href="index.html">Home</a>
             
             <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
                     <!-- Login Button -->
                     <div class="fb-login-button"
                         id="loginButton"
                         scope="public_profile,email"
-                        onlogin="checkLoginState();">
+                        onlogin="checkLoginState()">
                     </div>
                     
                     <!-- Logout Button -->
                     <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
                 </ul>
             </div>
-          </nav>
+        </nav>
 
-        <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
-
+        <!-- User Profile -->
+        <div class="container">
+            <div id="userProfile"></div>
+        </div>
     </body>
 </html>
