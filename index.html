@@ -88,14 +88,14 @@
 
             // Get user profile
             function getUserProfile() {
-                FB.api('/me', 'GET', {"fields":"id,name,birthday,email"}, function(response) {
+                FB.api('/me', 'GET', {"fields":"id, name, email, birthday"}, function(response) {
                     let userProfile = `
                         <h3>User Profile</h3>
                         <ul class="list-group">
                             <li class="list-group-item">ID: ${response.id}</li>
                             <li class="list-group-item">Name: ${response.name}</li>
-                            <li class="list-group-item">Birthday: ${response.birthday}</li>
                             <li class="list-group-item">Email: ${response.email}</li>
+                            <li class="list-group-item">Birthday: ${response.birthday}</li>
                         </ul>
                     `;
                     document.getElementById('userProfile').innerHTML = userProfile;
@@ -115,7 +115,7 @@
                     <!-- Login Button -->
                     <div class="fb-login-button"
                         id="loginButton"
-                        scope="public_profile,email"
+                        scope="public_profile, email, user_birthday"
                         onlogin="checkLoginState()">
                     </div>
                     
