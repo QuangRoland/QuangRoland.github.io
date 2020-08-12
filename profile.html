@@ -80,7 +80,7 @@
             // Logout
             function logout() {
                 FB.logout(function(response) {
-                    checkLoginState();
+                    window.location.href = "index.html";
                 });
             }
 
@@ -110,13 +110,6 @@
             
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
-                    <!-- Login Button -->
-                    <div class="fb-login-button"
-                        id="loginButton"
-                        scope="public_profile, email, user_birthday"
-                        onlogin="checkLoginState()">
-                    </div>
-                    
                     <!-- Logout Button -->
                     <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
                 </ul>
