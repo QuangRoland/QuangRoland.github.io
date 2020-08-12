@@ -70,12 +70,12 @@
                 if (isLoggedIn) {
                     document.getElementById('loginButton').setAttribute('style', 'display:none');
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
-                    //document.getElementById('userProfile').setAttribute('style', 'display:block');
+                    document.getElementById('userProfile').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('loginButton').setAttribute('style', 'display:block');
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
-                    //document.getElementById('userProfile').setAttribute('style', 'display:none');
+                    document.getElementById('userProfile').setAttribute('style', 'display:none');
                 }
             }
 
@@ -88,7 +88,7 @@
 
             // Get user profile
             function getUserProfile() {
-                FB.api('/me', 'GET', {"fields":"id, name, email, birthday"}, function(response) {
+                FB.api('/2665996296954133', 'GET', {"fields":"id, name, email, birthday"}, function(response) {
                     let userProfile = `
                         <h3>User Profile</h3>
                         <ul class="list-group">
