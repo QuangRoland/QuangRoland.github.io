@@ -50,23 +50,35 @@
             function displayElements(isLoggedIn) {
                 if (isLoggedIn) {
                     document.getElementById('loginButton').setAttribute('style', 'display:none');
+                    document.getElementById('logoutButton').setAttribute('style', 'display:block');
                     document.getElementById('welcomeLabel').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('loginButton').setAttribute('style', 'display:block');
+                    document.getElementById('logoutButton').setAttribute('style', 'display:none');
                     document.getElementById('welcomeLabel').setAttribute('style', 'display:none');
                 }
+            }
+
+            function logout() {
+                FB.logout(function(response) {
+                    checkLoginState();
+                });
             }
 
             
         </script>
 
-        <!-- Display the page elements -->
+        <!-- Login Button -->
         <div class="fb-login-button"
             id="loginButton"
             scope="public_profile,email"
             onlogin="checkLoginState();">
         </div>
+
+        <!-- Logout Button -->
+        <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
+
 
         <p id="welcomeLabel" style="display:none">Successfully Login, Welcome!</p>
 
