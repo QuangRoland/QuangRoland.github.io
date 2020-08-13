@@ -90,8 +90,6 @@
             function getUserProfile() {
                 FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
-                        console.log(response);
-                        console.log(response.id);
                         let userProfile = '<h3>User Profile</h3>'
                             + '<ul class="list-group">'
                             + '<li class="list-group-item">ID: ' + response.id + '</li>'
@@ -114,18 +112,12 @@
                     if(response && !response.error) {
                         let userFeed = '<h3>User Feed</h3>'
                             + '<ul class="list-group">';
-                        console.log(response);
-                        console.log(response.feed.data);
                         for (let i in response.feed.data) {
-                            console.log('reach here');
                             if (response.feed.data[i].message) {
-                                console.log('reach here 2');
-                                console.log(i.message);
-                                console.log(response.feed.data[i].message);
                                 userFeed = userFeed + '<li class="list-group-item">' + response.feed.data[i].message + '</li>';
                             }
                         }
-                        userFeed = userFeed + + '</ul>';
+                        userFeed = userFeed + '</ul>';
 
                         document.getElementById('userFeed').innerHTML = userFeed;
                     }
