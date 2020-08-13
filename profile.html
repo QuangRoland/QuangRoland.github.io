@@ -87,7 +87,7 @@
 
             // Get user profile
             function getUserProfile() {
-                FB.api('/me', 'GET', {"fields":"id, name, email, birthday"}, function(response) {
+                FB.api('/me', 'GET', {"fields":"id, name, email, birthday, link"}, function(response) {
                     let userProfile = `
                         <h3>User Profile</h3>
                         <ul class="list-group">
@@ -95,6 +95,7 @@
                             <li class="list-group-item">Name: ${response.name}</li>
                             <li class="list-group-item">Email: ${response.email}</li>
                             <li class="list-group-item">Birthday: ${response.birthday}</li>
+                            <li class="list-group-item">Facebook Link: ${response.link}</li>
                         </ul>
                     `;
                     document.getElementById('userProfile').innerHTML = userProfile;
