@@ -58,6 +58,7 @@
                     console.log('Logged in');
                     displayElements(true);
                     getUserProfile();
+                    getUserFeed();
                 }
                 else {
                     console.log('Not Logged in');
@@ -87,36 +88,43 @@
 
             // Get user profile
             function getUserProfile() {
-                FB.api('/me', 'GET', {"fields":"id, name, gender, birthday, hometown, email, link"}, function(response) {
-                    // let userProfile = `
-                    //     <h3>User Profile</h3>
-                    //     <ul class="list-group">
-                    //         <li class="list-group-item">ID: ${response.id}</li>
-                    //         <li class="list-group-item">Name: ${response.name}</li>
-                    //         <li class="list-group-item">Gender: ${response.gender}</li>
-                    //         <li class="list-group-item">Birthday: ${response.birthday}</li>
-                    //         <li class="list-group-item">Hometown: ${response.hometown.name}</li>
-                    //         <li class="list-group-item">Email: ${response.email}</li>
-                    //         <li class="list-group-item"><a href="${response.link}" target="_blank">Link to profile page</a></li>
-                    //     </ul>
-                    // `;
+                FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
+                    if(response && !response.error) {
+                        let userProfile = '<h3>User Profile</h3>'
+                            + '<ul class="list-group">'
+                            + '<li class="list-group-item">ID: ' + response.id + '</li>'
+                            + '<li class="list-group-item">Name: ' + response.name + '</li>'
+                            + '<li class="list-group-item">Gender: ' + response.gender + '</li>'
+                            + '<li class="list-group-item">Birthday: ' + response.birthday + '</li>'
+                            + '<li class="list-group-item">Hometown: ' + response.hometown.name + '</li>'
+                            + '<li class="list-group-item">Email: ' + response.email + '</li>'
+                            + '<li class="list-group-item"><a href="' + response.link + '" target="_blank">Link to profile page</a></li>'
+                            + '</ul>';
 
-                    let userProfile = '<h3>User Profile</h3>'
-                        + '<ul class="list-group">'
-                        + '<li class="list-group-item">ID: ' + response.id + '</li>'
-                        + '<li class="list-group-item">Name: ' + response.name + '</li>'
-                        + '<li class="list-group-item">Gender: ' + response.gender + '</li>'
-                        + '<li class="list-group-item">Birthday: ' + response.birthday + '</li>'
-                        + '<li class="list-group-item">Hometown: ' + response.hometown.name + '</li>'
-                        + '<li class="list-group-item">Email: ' + response.email + '</li>'
-                        + '<li class="list-group-item"><a href="' + response.link + '" target="_blank">Link to profile page</a></li>'
-                        + '</ul>';
-
-                    document.getElementById('userProfile').innerHTML = userProfile;
+                        document.getElementById('userProfile').innerHTML = userProfile;
+                    }
                 });
             }
 
-            
+            // Get user feed
+            function getUserFeed() {
+                FB.api('me?fields=feed.limit(2)', function(response) {
+                    if(response && !response.error) {
+                        let userFeed = '<h3>User Feed</h3>'
+                            + '<ul class="list-group">';
+                        for (let i in response.data) {
+                            if (i.message) {
+                                userFeed = userFeed + '<li class="list-group-item">' + i.message + '</li>';
+                            }
+                        }
+                        userFeed = userFeed + + '</ul>';
+
+                        document.getElementById('userFeed').innerHTML = userFeed;
+                    }
+                });
+            }
+
+
         </script>
 
         <!-- Navigation bar -->
@@ -138,6 +146,7 @@
         <!-- User Profile -->
         <div class="container">
             <div id="userProfile"></div>
+            <div id="userFeed"></div>
         </div>
     </body>
 </html>
