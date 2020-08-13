@@ -115,14 +115,14 @@
                         let userFeed = '<h3>User Feed</h3>'
                             + '<ul class="list-group">';
                         console.log(response);
-                        console.log(response.data);
-                        for (let i in response.data) {
+                        console.log(response.feed.data);
+                        for (let i in response.feed.data) {
                             console.log('reach here');
-                            if (response.data[i].message) {
+                            if (response.feed.data[i].message) {
                                 console.log('reach here 2');
                                 console.log(i.message);
-                                console.log(response.data[i].message);
-                                userFeed = userFeed + '<li class="list-group-item">' + response.data[i].message + '</li>';
+                                console.log(response.feed.data[i].message);
+                                userFeed = userFeed + '<li class="list-group-item">' + response.feed.data[i].message + '</li>';
                             }
                         }
                         userFeed = userFeed + + '</ul>';
