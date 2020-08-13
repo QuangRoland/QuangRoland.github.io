@@ -108,11 +108,12 @@
 
             // Get user feed
             function getUserFeed() {
-                FB.api('me?fields=feed', function(response) {
+                FB.api('/me?fields=feed.limit(2)', function(response) {
                     if(response && !response.error) {
                         let userFeed = '<h3>User Feed</h3>'
                             + '<ul class="list-group">';
                         console.log(response);
+                        console.log(response.data);
                         for (let i in response.data) {
                             console.log('reach here');
                             if (response.data[i].message) {
