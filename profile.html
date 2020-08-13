@@ -90,6 +90,8 @@
             function getUserProfile() {
                 FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
+                        console.log(response);
+                        console.log(response.id);
                         let userProfile = '<h3>User Profile</h3>'
                             + '<ul class="list-group">'
                             + '<li class="list-group-item">ID: ' + response.id + '</li>'
