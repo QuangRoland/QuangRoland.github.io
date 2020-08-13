@@ -114,6 +114,8 @@
                             + '<ul class="list-group">';
                         for (let i in response.data) {
                             if (response.data[i].message) {
+                                console.log(i.message);
+                                console.log(response.data[i].message);
                                 userFeed = userFeed + '<li class="list-group-item">' + response.data[i].message + '</li>';
                             }
                         }
