@@ -48,6 +48,7 @@
             // Check login state
             function checkLoginState() {
                 FB.getLoginStatus(function(response) {
+                    console.log(response);
                     statusChangeCallback(response);
                 });
             }
@@ -79,9 +80,18 @@
                 }
             }
 
+            // Login
+            function login() {
+                FB.login(function(response) {
+                    //console.log(response);
+                    checkLoginState();
+                });
+            }
+
             // Logout
             function logout() {
                 FB.logout(function(response) {
+                    //console.log(response);
                     checkLoginState();
                 });
             }
@@ -105,11 +115,12 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
                     <!-- Login Button -->
-                    <div class="fb-login-button"
+                    <!-- <div class="fb-login-button"
                         id="loginButton"
                         scope="public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts"
                         onlogin="checkLoginState()">
-                    </div>
+                    </div> -->
+                    <button id="loginButton" onclick="login()" style="display:none">Login</button>
                     
                     <!-- Logout Button -->
                     <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
