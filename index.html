@@ -48,7 +48,7 @@
             // Check login state
             function checkLoginState() {
                 FB.getLoginStatus(function(response) {
-                    console.log(response);
+                    // console.log(response);
                     statusChangeCallback(response);
                 });
             }
@@ -83,7 +83,7 @@
             // Login
             function login() {
                 FB.login(function(response) {
-                    //console.log(response);
+                    console.log(response);
                     checkLoginState();
                 });
             }
@@ -91,7 +91,7 @@
             // Logout
             function logout() {
                 FB.logout(function(response) {
-                    //console.log(response);
+                    console.log(response);
                     checkLoginState();
                 });
             }
