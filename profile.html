@@ -111,7 +111,7 @@
 
             // Get user feed
             function getUserFeed() {
-                FB.api('/me?fields=feed.limit(2)', function(response) {
+                FB.api('/me?fields=feed.limit(2){message,permalink_url,comments{message}}', function(response) {
                     if(response && !response.error) {
                         console.log('User Feed:');
                         console.log(response);
@@ -120,7 +120,7 @@
                             + '<ul class="list-group">';
                         for (let i in response.feed.data) {
                             if (response.feed.data[i].message) {
-                                userFeed = userFeed + '<li class="list-group-item">' + response.feed.data[i].message + '</li>';
+                                userFeed = userFeed + '<li class="list-group-item"><p>' + response.feed.data[i].message + '</p></li>';
                             }
                         }
                         userFeed = userFeed + '</ul>';
