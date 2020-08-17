@@ -48,7 +48,6 @@
             // Check login state
             function checkLoginState() {
                 FB.getLoginStatus(function(response) {
-                    console.log(response);
                     statusChangeCallback(response);
                 });
             }
@@ -56,10 +55,16 @@
             // Called with the results from FB.getLoginStatus()
             function statusChangeCallback(response) {
                 if (response.status === 'connected') {
+                    console.log('Logged in');
+                    console.log(response);
+
                     displayElements(true);
                     showWelcome();
                 }
                 else {
+                    console.log('Not Logged in');
+                    console.log(response);
+
                     displayElements(false);
                 }
             }
@@ -78,12 +83,13 @@
                 }
             }
 
+            // Old Login
             // Login
-            function login() {
-                FB.login(function(response) {
-                    checkLoginState();
-                }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts'});
-            }
+            // function login() {
+            //     FB.login(function(response) {
+            //         checkLoginState();
+            //     }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts'});
+            // }
 
             // Logout
             function logout() {
@@ -111,12 +117,14 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
                     <!-- Login Button -->
-                    <!-- <div class="fb-login-button"
+                    <div class="fb-login-button"
                         id="loginButton"
                         scope="public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts"
                         onlogin="checkLoginState()">
-                    </div> -->
-                    <button id="loginButton" onclick="login()" style="display:none">Login</button>
+                    </div>
+
+                    <!-- Old Login Button -->
+                    <!-- <button id="loginButton" onclick="login()" style="display:none">Login</button> -->
                     
                     <!-- Logout Button -->
                     <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
