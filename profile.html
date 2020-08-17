@@ -25,16 +25,16 @@
             crossorigin="anonymous"></script>
 
         <script>
-            // window.fbAsyncInit = function() {
-            //     FB.init({
-            //         appId      : '1650600928436459',
-            //         cookie     : true,
-            //         xfbml      : true,
-            //         version    : 'v8.0'
-            //     });
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '1650600928436459',
+                    cookie     : true,
+                    xfbml      : true,
+                    version    : 'v8.0'
+                });
 
-            //     checkLoginState();
-            // };
+                checkLoginState();
+            };
 
             // Javascript SDK for Facebook API
             (function(d, s, id) {
@@ -90,6 +90,8 @@
             function getUserProfile() {
                 FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
+                        console.log(response);
+
                         let userProfile = '<h3>User Profile</h3>'
                             + '<ul class="list-group">'
                             + '<li class="list-group-item">ID: ' + response.id + '</li>'
@@ -110,6 +112,8 @@
             function getUserFeed() {
                 FB.api('/me?fields=feed.limit(2)', function(response) {
                     if(response && !response.error) {
+                        console.log(response);
+
                         let userFeed = '<h3>User Feed</h3>'
                             + '<ul class="list-group">';
                         for (let i in response.feed.data) {
