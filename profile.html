@@ -48,7 +48,7 @@
             // Check login state
             function checkLoginState() {
                 FB.getLoginStatus(function(response) {
-                    // console.log(response);
+                    console.log(response);
                     statusChangeCallback(response);
                 });
             }
@@ -56,13 +56,11 @@
             // Called with the results from FB.getLoginStatus()
             function statusChangeCallback(response) {
                 if (response.status === 'connected') {
-                    console.log('Logged in');
                     displayElements(true);
                     getUserProfile();
                     getUserFeed();
                 }
                 else {
-                    console.log('Not Logged in');
                     displayElements(false);
                     window.location.href = "index.html";
                 }
@@ -83,7 +81,6 @@
             // Logout
             function logout() {
                 FB.logout(function(response) {
-                    console.log(response);
                     checkLoginState();
                 });
             }
