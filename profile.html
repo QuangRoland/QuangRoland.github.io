@@ -120,7 +120,10 @@
                             + '<ul class="list-group">';
                         for (let i in response.feed.data) {
                             if (response.feed.data[i].message) {
-                                userFeed = userFeed + '<li class="list-group-item"><p>' + response.feed.data[i].message + '</p></li>';
+                                userFeed = userFeed + '<li class="list-group-item">'
+                                    + '<p>Message: ' + response.feed.data[i].message + '<br>'
+                                    + '<a href="' + response.feed.data[i].permalink_url + '" target="_blank">Link to the post</a>'
+                                    + '</p></li>';
                             }
                         }
                         userFeed = userFeed + '</ul>';
