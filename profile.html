@@ -56,15 +56,12 @@
             function statusChangeCallback(response) {
                 if (response.status === 'connected') {
                     console.log('Logged in');
-                    console.log(response);
-
                     displayElements(true);
                     getUserProfile();
                     getUserFeed();
                 }
                 else {
                     console.log('Not Logged in');
-                    
                     displayElements(false);
                     window.location.href = "index.html";
                 }
