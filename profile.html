@@ -72,12 +72,10 @@
                 if (isLoggedIn) {
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
                     document.getElementById('userProfile').setAttribute('style', 'display:block');
-                    document.getElementById('postButton').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
                     document.getElementById('userProfile').setAttribute('style', 'display:none');
-                    document.getElementById('postButton').setAttribute('style', 'display:none');
                 }
             }
 
@@ -142,13 +140,6 @@
                 });
             }
 
-            // Post on user feed
-            function postOnUserFeed() {
-                FB.api('/me/feed', 'POST', {"message":"Test API."}, function(response) {
-                    console.log('Reach here.');
-                    console.log(response);
-                });
-            }
 
         </script>
 
@@ -172,7 +163,6 @@
         <div class="container">
             <div id="userProfile"></div>
             <div id="userFeed"></div>
-            <button id="postButton" onclick="postOnUserFeed()">Post to Facebook</button>
         </div>
     </body>
 </html>
