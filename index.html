@@ -132,20 +132,5 @@
         <div class="container">
             <div id="welcomeMessage"></div>
         </div>
-
-        <h3>Sharing Links</h3>
-
-        <div id="shareButton" class="btn btn-success clearfix">Share</div>
-
-        <script>
-            document.getElementById('shareButton').onclick = function() {
-                FB.ui({
-                    display: 'popup',
-                    method: 'share',
-                    href: '',
-                }, function(response){});
-            }
-        </script>
-
     </body>
 </html>
