@@ -102,9 +102,6 @@
                             FB.api('/' + response.accounts.data[i].id + '?fields=name, feed.limit(2){message,permalink_url,comments{message}}',
                             function(response) {
                                 if(response && !response.error) {
-                                    console.log('Page Feed:');
-                                    console.log(response);
-
                                     pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
                                         + '<ul class="list-group">';
                                     for (var i in response.feed.data) {
@@ -116,6 +113,7 @@
                                         }
                                     }
                                     pageFeed = pageFeed + '</ul>';
+                                    console.log(pageFeed);
                                 }
                             });
                         }
