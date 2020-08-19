@@ -85,24 +85,17 @@
                 });
             }
 
-            // Store page id
-            var pageIdArray = [];
+            // Store page feed list 
+            var pageFeedList = [];
 
             // Get page feed
             function getPageFeed() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
-                        console.log('User Page List:');
-                        console.log(response);
-
-                        var pageFeed = '<h3>Page Feed</h3>';
-
                         for (var i in response.accounts.data) {
-
-                            FB.api('/' + response.accounts.data[i].id + '?fields=name, feed.limit(2){message,permalink_url,comments{message}}',
-                            function(response) {
+                            FB.api('/' + response.accounts.data[i].id + '?fields=name,feed{message,permalink_url}', function(response) {
                                 if(response && !response.error) {
-                                    pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
+                                    var pageFeed = '<h3>' + response.name + '</h3>'
                                         + '<ul class="list-group">';
                                     for (var i in response.feed.data) {
                                         if (response.feed.data[i].message) {
@@ -113,12 +106,14 @@
                                         }
                                     }
                                     pageFeed = pageFeed + '</ul>';
+
                                     console.log(pageFeed);
+                                    pageFeedList.push(pageFeed);
                                 }
                             });
                         }
-
-                        document.getElementById('pageFeed').innerHTML = pageFeed;
+                        console.log(pageFeedList)
+                        document.getElementById('pageFeed').innerHTML = pageFeedList;
                     }
                 });
             }
