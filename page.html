@@ -85,38 +85,63 @@
                 });
             }
 
-            // Store page feed list 
-            var pageFeedList = [];
-
-            // Get page feed
-            function getPageFeed() {
+            // Get page id list
+            var pageIdList = [];
+            function getPageIdList() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
-                            FB.api('/' + response.accounts.data[i].id + '?fields=name,feed{message,permalink_url}', function(response) {
-                                if(response && !response.error) {
-                                    var pageFeed = '<h3>' + response.name + '</h3>'
-                                        + '<ul class="list-group">';
-                                    for (var i in response.feed.data) {
-                                        if (response.feed.data[i].message) {
-                                            pageFeed = pageFeed + '<li class="list-group-item">'
-                                                + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                                + '<div><a href="' + response.feed.data[i].permalink_url
-                                                + '" target="_blank">Link to the post</a></div></li>';
-                                        }
-                                    }
-                                    pageFeed = pageFeed + '</ul>';
-
-                                    console.log(pageFeed);
-                                    pageFeedList.push(pageFeed);
-                                }
-                            });
+                            pageIdList.push(response.accounts.data[i].id);
                         }
-                        console.log(pageFeedList)
-                        document.getElementById('pageFeed').innerHTML = pageFeedList;
                     }
                 });
             }
+
+            // Get page feed
+            function getPageFeed() {
+                for (var i in pageIdList) {
+                    console.log(pageIdList[i]);
+                }
+            }
+
+
+
+
+
+
+
+            // // Store page feed list
+            // var pageFeedList = [];
+
+            // // Get page feed
+            // function getPageFeed() {
+            //     FB.api('/me?fields=accounts', function(response) {
+            //         if(response && !response.error) {
+            //             for (var i in response.accounts.data) {
+            //                 FB.api('/' + response.accounts.data[i].id + '?fields=name,feed{message,permalink_url}', function(response) {
+            //                     if(response && !response.error) {
+            //                         var pageFeed = '<h3>' + response.name + '</h3>'
+            //                             + '<ul class="list-group">';
+            //                         for (var i in response.feed.data) {
+            //                             if (response.feed.data[i].message) {
+            //                                 pageFeed = pageFeed + '<li class="list-group-item">'
+            //                                     + '<div>Message: ' + response.feed.data[i].message + '</div>'
+            //                                     + '<div><a href="' + response.feed.data[i].permalink_url
+            //                                     + '" target="_blank">Link to the post</a></div></li>';
+            //                             }
+            //                         }
+            //                         pageFeed = pageFeed + '</ul>';
+
+            //                         console.log(pageFeed);
+            //                         pageFeedList.push(pageFeed);
+            //                     }
+            //                 });
+            //             }
+            //             console.log(pageFeedList)
+            //             document.getElementById('pageFeed').innerHTML = pageFeedList;
+            //         }
+            //     });
+            // }
 
 
         </script>
