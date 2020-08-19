@@ -25,8 +25,6 @@
             crossorigin="anonymous"></script>
 
         <script>
-            var pageIdList = [];
-
             window.fbAsyncInit = function() {
                 FB.init({
                     appId      : '1650600928436459',
@@ -89,7 +87,7 @@
             }
 
             // Get page id list
-            
+            var pageIdList = [];
             function getPageIdList() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
@@ -99,6 +97,7 @@
                     }
                 });
                 console.log(pageIdList);
+                console.log(pageIdList.length);
             }
 
             // Get page feed
@@ -112,7 +111,7 @@
                 testList.push('wtf2');
                 testList.push('wtf3');
                 console.log(testList);
-                console.log(testList.length);
+                console.log(pageIdList.length);
 
                 for (var i = 0; i < pageIdList.length; i++) {
                     console.log('reach here');
