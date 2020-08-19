@@ -91,6 +91,7 @@
             function getPagesFeed() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
+                        console.log(pagesFeed);
                         for (var i in response.accounts.data) {
                             getPagePost(response.accounts.data[i].id);
                         }
