@@ -57,7 +57,7 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    getPageIdList;
+                    getPageIdList();
                     getPageFeed();
                 }
                 else {
@@ -93,8 +93,6 @@
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
                             pageIdList.push(response.accounts.data[i].id);
-                            console.log('reach here');
-                            console.log(pageIdList[i]);
                         }
                     }
                 });
@@ -102,7 +100,6 @@
 
             // Get page feed
             function getPageFeed() {
-                console.log(pageIdList);
                 for (var i in pageIdList) {
                     console.log(pageIdList[i]);
                 }
