@@ -69,9 +69,11 @@
             function displayElements(isLoggedIn) {
                 if (isLoggedIn) {
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
+                    document.getElementById('pageFeed').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
+                    document.getElementById('pageFeed').setAttribute('style', 'display:none');
                 }
             }
 
@@ -79,6 +81,16 @@
             function logout() {
                 FB.logout(function(response) {
                     checkLoginState();
+                });
+            }
+
+            // Get page feed
+            function getPageFeed() {
+                FB.api('/me?fields=accounts', function(response) {
+                    if(response && !response.error) {
+                        console.log('User Page List:');
+                        console.log(response);
+                    }
                 });
             }
 
@@ -106,7 +118,7 @@
 
         <!-- User Profile -->
         <div class="container">
-            
+            <div id="pageFeed"></div>
         </div>
     </body>
 </html>

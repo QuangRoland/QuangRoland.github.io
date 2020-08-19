@@ -72,10 +72,12 @@
                 if (isLoggedIn) {
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
                     document.getElementById('userProfile').setAttribute('style', 'display:block');
+                    document.getElementById('userFeed').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
                     document.getElementById('userProfile').setAttribute('style', 'display:none');
+                    document.getElementById('userFeed').setAttribute('style', 'display:none');
                 }
             }
 
@@ -93,7 +95,7 @@
                         console.log('User Profile:');
                         console.log(response);
 
-                        let userProfile = '<h3>User Profile</h3>'
+                        var userProfile = '<h3>User Profile</h3>'
                             + '<ul class="list-group">'
                             + '<li class="list-group-item">ID: ' + response.id + '</li>'
                             + '<li class="list-group-item">Name: ' + response.name + '</li>'
@@ -116,15 +118,15 @@
                         console.log('User Feed:');
                         console.log(response);
 
-                        let userFeed = '<h3>User Feed</h3>'
+                        var userFeed = '<h3>User Feed</h3>'
                             + '<ul class="list-group">';
-                        for (let i in response.feed.data) {
+                        for (var i in response.feed.data) {
                             if (response.feed.data[i].message) {
                                 userFeed = userFeed + '<li class="list-group-item">'
                                     + '<div>Message: ' + response.feed.data[i].message + '</div>'
                                     + '<div><a href="' + response.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
 
-                                    for (let j in response.feed.data[i].comments.data) {
+                                    for (var j in response.feed.data[i].comments.data) {
                                         if (response.feed.data[i].comments.data[j].message) {
                                             userFeed = userFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message + '</div>';
                                         }
