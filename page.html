@@ -95,15 +95,17 @@
                         console.log('User Page List:');
                         console.log(response);
 
+                        var pageFeed = '<h3>Page Feed</h3>';
+
                         for (var i in response.accounts.data) {
-                            // pageIdArray[i] = response.accounts.data[i].id;
+
                             FB.api('/' + response.accounts.data[i].id + '?fields=name, feed.limit(2){message,permalink_url,comments{message}}',
                             function(response) {
                                 if(response && !response.error) {
                                     console.log('Page Feed:');
                                     console.log(response);
 
-                                    var pageFeed = '<h3>Page Feed</h3>'
+                                    pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
                                         + '<ul class="list-group">';
                                     for (var i in response.feed.data) {
                                         if (response.feed.data[i].message) {
@@ -114,11 +116,11 @@
                                         }
                                     }
                                     pageFeed = pageFeed + '</ul>';
-
-                                    document.getElementById('pageFeed').innerHTML = pageFeed;
                                 }
                             });
                         }
+
+                        document.getElementById('pageFeed').innerHTML = pageFeed;
                     }
                 });
             }
