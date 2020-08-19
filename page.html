@@ -57,35 +57,23 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    showWelcome();
                 }
                 else {
                     console.log('Not Logged in');
                     displayElements(false);
+                    window.location.href = "index.html";
                 }
             }
 
             // Display the page elements based on the login state
             function displayElements(isLoggedIn) {
                 if (isLoggedIn) {
-                    document.getElementById('loginButton').setAttribute('style', 'display:none');
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
-                    document.getElementById('welcomeMessage').setAttribute('style', 'display:block');
                 }
                 else {
-                    document.getElementById('loginButton').setAttribute('style', 'display:block');
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
-                    document.getElementById('welcomeMessage').setAttribute('style', 'display:none');
                 }
             }
-
-            // Old Login
-            // Login
-            // function login() {
-            //     FB.login(function(response) {
-            //         checkLoginState();
-            //     }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts'});
-            // }
 
             // Logout
             function logout() {
@@ -94,12 +82,7 @@
                 });
             }
 
-            // Show welcome message
-            function showWelcome() {
-                document.getElementById('welcomeMessage').innerHTML = '<h3>Welcome to the main page</h3>';
-            }
 
-            
         </script>
 
         <!-- Navigation bar -->
@@ -108,32 +91,22 @@
             <a class="navbar-brand" href="index.html">Home</a>
 
             <!-- Profile Button -->
-            <a class="navbar-brand" id="profileButton" href="profile.html"">Profile</a>
+            <a class="navbar-brand" id="profileButton" href="profile.html">Profile</a>
 
             <!-- Page Button -->
             <a class="navbar-brand" id="pageButton" href="page.html">Page</a>
             
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
-                    <!-- Login Button -->
-                    <div class="fb-login-button"
-                        id="loginButton"
-                        scope="public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts"
-                        onlogin="checkLoginState()">
-                    </div>
-
-                    <!-- Old Login Button -->
-                    <!-- <button id="loginButton" onclick="login()" style="display:none">Login</button> -->
-                    
                     <!-- Logout Button -->
                     <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
                 </ul>
             </div>
         </nav>
 
-        <!-- Welcome Message -->
+        <!-- User Profile -->
         <div class="container">
-            <div id="welcomeMessage"></div>
+            
         </div>
     </body>
 </html>
