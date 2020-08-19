@@ -93,8 +93,6 @@
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
                             pageIdList.push(response.accounts.data[i].id);
-                            console.log(response.accounts.data[i].id);
-                            console.log(pageIdList[i]);
                         }
                     }
                 });
@@ -102,7 +100,7 @@
 
             // Get page feed
             function getPageFeed() {
-                for (var i in pageIdList) {
+                for (var i = 0; i < pageIdList.length; i++) {
                     console.log(pageIdList[i]);
                 }
             }
