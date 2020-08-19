@@ -57,7 +57,7 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    getPageFeed();
+                    getPagesFeed();
                 }
                 else {
                     console.log('Not Logged in');
@@ -85,42 +85,39 @@
                 });
             }
 
-            // Store page id
-            var pageIdArray = [];
+            // Get pages feed
+            var pagesFeed = '<h3>Pages Feed</h3>';
 
-            // Get page feed
-            function getPageFeed() {
+            function getPagesFeed() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
-                        console.log('User Page List:');
-                        console.log(response);
-
-                        var pageFeed = '<h3>Page Feed</h3>';
-
                         for (var i in response.accounts.data) {
-
-                            FB.api('/' + response.accounts.data[i].id + '?fields=name, feed.limit(2){message,permalink_url,comments{message}}',
-                            function(response) {
-                                if(response && !response.error) {
-                                    console.log('Page Feed:');
-                                    console.log(response);
-
-                                    pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
-                                        + '<ul class="list-group">';
-                                    for (var i in response.feed.data) {
-                                        if (response.feed.data[i].message) {
-                                            pageFeed = pageFeed + '<li class="list-group-item">'
-                                                + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                                + '<div><a href="' + response.feed.data[i].permalink_url
-                                                + '" target="_blank">Link to the post</a></div></li>';
-                                        }
-                                    }
-                                    pageFeed = pageFeed + '</ul>';
-                                }
-                            });
+                            getPagePost(response.accounts.data[i].id);
                         }
 
-                        document.getElementById('pageFeed').innerHTML = pageFeed;
+                        document.getElementById('pagesFeed').innerHTML = pagesFeed;
+                    }
+                });
+            }
+
+            // Get page post
+            function getPagePost(pageId) {
+                FB.api('/' + pageId + '?fields=name,feed.limit(2){message,permalink_url}', function(response) {
+                    if(response && !response.error) {
+                        console.log(response.name + ' Feed:');
+                        console.log(response);
+
+                        pagesFeed = pagesFeed + '<h3>' + response.name + '</h3>'
+                            + '<ul class="list-group">';
+                        for (var i in response.feed.data) {
+                            if (response.feed.data[i].message) {
+                                pagesFeed = pagesFeed + '<li class="list-group-item">'
+                                    + '<div>Message: ' + response.feed.data[i].message + '</div>'
+                                    + '<div><a href="' + response.feed.data[i].permalink_url
+                                    + '" target="_blank">Link to the post</a></div></li>';
+                            }
+                        }
+                        pagesFeed = pagesFeed + '</ul>';
                     }
                 });
             }
@@ -149,7 +146,7 @@
 
         <!-- User Profile -->
         <div class="container">
-            <div id="pageFeed"></div>
+            <div id="pagesFeed"></div>
         </div>
     </body>
 </html>
