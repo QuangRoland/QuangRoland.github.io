@@ -96,9 +96,9 @@
                         console.log(response);
 
                         for (var i in response.accounts.data) {
-                            pageIdArray[i] = response.accounts.data[i].id;
+                            pageIdArray.push(response.accounts.data[i].id);
                         }
-                        
+
                         console.log(pageIdArray);
                     }
                 });
