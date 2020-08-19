@@ -57,6 +57,7 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
+                    getPageFeed();
                 }
                 else {
                     console.log('Not Logged in');
@@ -84,12 +85,21 @@
                 });
             }
 
+            // Store page id
+            var pageIdArray = [];
+
             // Get page feed
             function getPageFeed() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
                         console.log('User Page List:');
                         console.log(response);
+
+                        for (var i in response.accounts.data) {
+                            pageIdArray[i] = response.accounts.data[i].id;
+                        }
+                        
+                        console.log(pageIdArray);
                     }
                 });
             }
