@@ -25,6 +25,8 @@
             crossorigin="anonymous"></script>
 
         <script>
+            var pageIdList = [];
+
             window.fbAsyncInit = function() {
                 FB.init({
                     appId      : '1650600928436459',
@@ -87,7 +89,7 @@
             }
 
             // Get page id list
-            var pageIdList = [];
+            
             function getPageIdList() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
