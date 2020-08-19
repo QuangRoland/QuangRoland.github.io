@@ -96,10 +96,29 @@
                         console.log(response);
 
                         for (var i in response.accounts.data) {
-                            pageIdArray.push(response.accounts.data[i].id);
-                        }
+                            // pageIdArray[i] = response.accounts.data[i].id;
+                            FB.api('/' + response.accounts.data[i].id + '?fields=name, feed.limit(2){message,permalink_url,comments{message}}',
+                            function(response) {
+                                if(response && !response.error) {
+                                    console.log('Page Feed:');
+                                    console.log(response);
 
-                        console.log(pageIdArray);
+                                    var pageFeed = '<h3>Page Feed</h3>'
+                                        + '<ul class="list-group">';
+                                    for (var i in response.feed.data) {
+                                        if (response.feed.data[i].message) {
+                                            pageFeed = pageFeed + '<li class="list-group-item">'
+                                                + '<div>Message: ' + response.feed.data[i].message + '</div>'
+                                                + '<div><a href="' + response.feed.data[i].permalink_url
+                                                + '" target="_blank">Link to the post</a></div></li>';
+                                        }
+                                    }
+                                    pageFeed = pageFeed + '</ul>';
+
+                                    document.getElementById('pageFeed').innerHTML = pageFeed;
+                                }
+                            });
+                        }
                     }
                 });
             }
