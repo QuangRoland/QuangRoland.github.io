@@ -134,15 +134,16 @@
 
             function postToPage() {
                 var message = "Post something.";
-                var access_token = pageTokenList[0];
-                FB.api('/' + '100363751794472' + '/feed', 'post', { message:message, access_token:access_token }, function (response) {
-                    if(response && !response.error) {
-                        console.log('Successfully Post');
-                    }
-                    else {
-                        console.log(response);
-                    }
-                });
+                for (var i in pageIdList) {
+                    FB.api('/' + pageIdList[i] + '/feed', 'post', { message:message, access_token:pageTokenList[i] }, function (response) {
+                        if(response && !response.error) {
+                            console.log('Successfully Post');
+                        }
+                        else {
+                            console.log(response);
+                        }
+                    });
+                }
             }
 
 
