@@ -121,10 +121,12 @@
                         }
                     });
                 }
-                document.getElementById('pageFeed').innerHTML = pageFeed;
+                setTimeout(function() { 
+                    document.getElementById('pageFeed').innerHTML = pageFeed;
+                }, 2000);
             }
 
-            
+
         </script>
 
         <!-- Navigation bar -->
