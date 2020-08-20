@@ -71,10 +71,12 @@
                 if (isLoggedIn) {
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
                     document.getElementById('pageFeed').setAttribute('style', 'display:block');
+                    document.getElementById('postToPageButton').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
                     document.getElementById('pageFeed').setAttribute('style', 'display:none');
+                    document.getElementById('postToPageButton').setAttribute('style', 'display:none');
                 }
             }
 
@@ -152,9 +154,12 @@
             </div>
         </nav>
 
-        <!-- User Profile -->
         <div class="container">
+            <!-- Page Feed -->
             <div id="pageFeed"></div>
+
+            <!-- Post to Page Button -->
+            <button id="postToPageButton" onclick="postToPage()" style="display:none">Post to Page</button>
         </div>
     </body>
 </html>
