@@ -132,6 +132,16 @@
                 }, 500);
             }
 
+            function postToPage() {
+                var message = "Post something.";
+                var access_token = pageTokenList[0];
+                FB.api('/' + '100363751794472' + '/feed', 'post', { message:message, access_token:access_token }, function (response) {
+                    if(response && !response.error) {
+                        console.log('Successfully Post');
+                    }
+                });
+            }
+
 
         </script>
 
