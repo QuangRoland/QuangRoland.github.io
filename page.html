@@ -89,7 +89,7 @@
             // Get page id list
             var pageIdList = [];
             var pageIdListStatus = false;
-            function getPageIdList() {
+            async function getPageIdList() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
@@ -107,7 +107,7 @@
                 console.log('Here 3');
                 while (true) {
                     console.log('Here 5');
-                    if (pageIdListStatus === true) break;
+                    if (pageIdListStatus == true) break;
                 }
                 console.log('Here 5');
                 for (var i = 0; i < pageIdList.length; i++) {
