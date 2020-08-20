@@ -94,13 +94,17 @@
                         for (var i in response.accounts.data) {
                             pageIdList.push(response.accounts.data[i].id);
                         }
+                        console.log('Here 1');
                     }
+                    console.log('Here 2');
                 });
             }
 
             // Get page feed
             async function getPageFeed() {
+                console.log('Here 3');
                 await getPageIdList();
+                console.log('Here 4');
                 for (var i = 0; i < pageIdList.length; i++) {
                     console.log('reach here');
                     console.log(pageIdList[i]);
