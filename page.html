@@ -98,14 +98,29 @@
                     }
                 });
 
-                setTimeout('getPageFeed()', 1000);
+                setTimeout('getPageFeed()', 500);
             }
 
             // Get page feed
             function getPageFeed() {
+                var pageFeed = '<h3>Page Feed</h3>'
                 for (var i in pageIdList) {
-                    console.log(pageIdList[i]);
-                    console.log(pageTokenList[i]);
+                    FB.api('/' + pageIdList[i] + '?fields=name,feed{message,permalink_url}', function(response) {
+                        if(response && !response.error) {
+                            pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
+                                + '<ul class="list-group">';
+                            for (var i in response.feed.data) {
+                                if (response.feed.data[i].message) {
+                                    pageFeed = pageFeed + '<li class="list-group-item">'
+                                        + '<div>Message: ' + response.feed.data[i].message + '</div>'
+                                        + '<div><a href="' + response.feed.data[i].permalink_url
+                                        + '" target="_blank">Link to the post</a></div></li>';
+                                }
+                            }
+                            pageFeed = pageFeed + '</ul>';
+                            setTimeout(console.log(pageFeed), 500);
+                        }
+                    });
                 }
             }
 
