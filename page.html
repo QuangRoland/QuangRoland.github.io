@@ -57,8 +57,7 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    getPageIdList();
-                    setTimeout('getPageFeed()', 5000);
+                    getPageList();
                 }
                 else {
                     console.log('Not Logged in');
@@ -86,26 +85,27 @@
                 });
             }
 
-            // Get page id list
+            // Get page list
             var pageIdList = [];
-            function getPageIdList() {
+            var pageTokenList = [];
+            function getPageList() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
                             pageIdList.push(response.accounts.data[i].id);
+                            pageTokenList.push(response.accounts.data[i].access_token);
                         }
-                        console.log('Here 1');
                     }
-                    console.log('Here 2');
                 });
+
+                setTimeout('getPageFeed()', 1000);
             }
 
             // Get page feed
             function getPageFeed() {
-                console.log('Here 3');
-                for (var i = 0; i < pageIdList.length; i++) {
-                    console.log('Here 4');
+                for (var i in pageIdList) {
                     console.log(pageIdList[i]);
+                    console.log(pageTokenList[i]);
                 }
             }
 
