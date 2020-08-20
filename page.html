@@ -133,7 +133,7 @@
             }
 
             function postToPage() {
-                var message = "Post something.";
+                var message = document.getElementById('message').value;
                 for (var i in pageIdList) {
                     FB.api('/' + pageIdList[i] + '/feed', 'post', { message:message, access_token:pageTokenList[i] }, function (response) {
                         if(response && !response.error) {
@@ -172,7 +172,9 @@
             <!-- Page Feed -->
             <div id="pageFeed"></div>
 
-            <!-- Post to Page Button -->
+            <!-- Post to Page -->
+            <h3>Post to Page</h3>
+            <input type="text" id="message"></input>
             <button id="postToPageButton" onclick="postToPage()" style="display:none">Post to Page</button>
         </div>
     </body>
