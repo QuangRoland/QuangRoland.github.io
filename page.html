@@ -88,7 +88,6 @@
 
             // Get page id list
             var pageIdList = [];
-            var getPageIdListStatus = false;
             function getPageIdList() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
@@ -96,24 +95,12 @@
                             pageIdList.push(response.accounts.data[i].id);
                         }
                     }
-                    getPageIdListStatus = true;
-                    console.log(pageIdList);
-                    console.log(pageIdList.length);
                 });
-                console.log(pageIdList);
-                console.log(pageIdList.length);
-
-                var testList = [];
-                testList.push('wtf');
-                testList.push('wtf2');
-                testList.push('wtf3');
-                console.log(testList);
-                console.log(testList.length);
             }
 
             // Get page feed
-            function getPageFeed() {
-                
+            async function getPageFeed() {
+                await getPageIdList();
                 for (var i = 0; i < pageIdList.length; i++) {
                     console.log('reach here');
                     console.log(pageIdList[i]);
