@@ -58,7 +58,7 @@
                     console.log('Logged in');
                     displayElements(true);
                     getPageIdList();
-                    getPageFeed();
+                    setTimeout('getPageFeed()', 5000);
                 }
                 else {
                     console.log('Not Logged in');
@@ -88,14 +88,12 @@
 
             // Get page id list
             var pageIdList = [];
-            var pageIdListStatus = false;
-            async function getPageIdList() {
+            function getPageIdList() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
                             pageIdList.push(response.accounts.data[i].id);
                         }
-                        pageIdListStatus = true;
                         console.log('Here 1');
                     }
                     console.log('Here 2');
@@ -103,15 +101,10 @@
             }
 
             // Get page feed
-            async function getPageFeed() {
+            function getPageFeed() {
                 console.log('Here 3');
-                while (true) {
-                    console.log('Here 5');
-                    if (pageIdListStatus == true) break;
-                }
-                console.log('Here 5');
                 for (var i = 0; i < pageIdList.length; i++) {
-                    console.log('reach here');
+                    console.log('Here 4');
                     console.log(pageIdList[i]);
                 }
             }
