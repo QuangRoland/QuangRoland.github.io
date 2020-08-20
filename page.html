@@ -100,21 +100,21 @@
                     console.log(pageIdList);
                     console.log(pageIdList.length);
                 });
-                // console.log(pageIdList);
-                // console.log(pageIdList.length);
+                console.log(pageIdList);
+                console.log(pageIdList.length);
 
-                // var testList = [];
-                // testList.push('wtf');
-                // testList.push('wtf2');
-                // testList.push('wtf3');
-                // console.log(testList);
-                // console.log(testList.length);
+                var testList = [];
+                testList.push('wtf');
+                testList.push('wtf2');
+                testList.push('wtf3');
+                console.log(testList);
+                console.log(testList.length);
             }
 
             // Get page feed
             function getPageFeed() {
-                while (getPageIdListStatus === false) {
-
+                while (true) {
+                    if (getPageIdListStatus === true) break;
                 }
                 for (var i = 0; i < pageIdList.length; i++) {
                     console.log('reach here');
