@@ -57,7 +57,7 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    getPageList();
+                    getPageFeed();
                 }
                 else {
                     console.log('Not Logged in');
@@ -91,68 +91,44 @@
                 });
             }
 
-            // Get page list
+            // Page list
             var pageIdList = [];
             var pageTokenList = [];
-            function getPageList() {
+
+            // Get page feed
+            function getPageFeed() {
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
                             pageIdList.push(response.accounts.data[i].id);
                             pageTokenList.push(response.accounts.data[i].access_token);
                         }
-                        // getPageFeed();
 
-                        var pageFeed = '<h3>Page Feed</h3>'
-                for (var i in pageIdList) {
-                    FB.api('/' + pageIdList[i] + '?fields=name,feed{message,permalink_url}', function(response) {
-                        if(response && !response.error) {
-                            console.log(response.name + ' Feed:');
-                            console.log(response);
+                        var pageFeed = '<h3>Page Feed</h3>';
+                        for (var i in pageIdList) {
+                            FB.api('/' + pageIdList[i] + '?fields=name,feed{message,permalink_url}', function(response) {
+                                if(response && !response.error) {
+                                    console.log(response.name + ' Feed:');
+                                    console.log(response);
 
-                            pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
-                                + '<ul class="list-group">';
-                            for (var i in response.feed.data) {
-                                if (response.feed.data[i].message) {
-                                    pageFeed = pageFeed + '<li class="list-group-item">'
-                                        + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                        + '<div><a href="' + response.feed.data[i].permalink_url
-                                        + '" target="_blank">Link to the post</a></div></li>';
+                                    pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
+                                        + '<ul class="list-group">';
+                                    for (var i in response.feed.data) {
+                                        if (response.feed.data[i].message) {
+                                            pageFeed = pageFeed + '<li class="list-group-item">'
+                                                + '<div>Message: ' + response.feed.data[i].message + '</div>'
+                                                + '<div><a href="' + response.feed.data[i].permalink_url
+                                                + '" target="_blank">Link to the post</a></div></li>';
+                                        }
+                                    }
+                                    pageFeed = pageFeed + '</ul>';
+
+                                    document.getElementById('pageFeed').innerHTML = pageFeed;
                                 }
-                            }
-                            pageFeed = pageFeed + '</ul>';
-                            document.getElementById('pageFeed').innerHTML = pageFeed;
+                            });
                         }
-                    });
-                }
                     }
                 });
-            }
-
-            // Get page feed
-            function getPageFeed() {
-                var pageFeed = '<h3>Page Feed</h3>'
-                for (var i in pageIdList) {
-                    FB.api('/' + pageIdList[i] + '?fields=name,feed{message,permalink_url}', function(response) {
-                        if(response && !response.error) {
-                            console.log(response.name + ' Feed:');
-                            console.log(response);
-
-                            pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
-                                + '<ul class="list-group">';
-                            for (var i in response.feed.data) {
-                                if (response.feed.data[i].message) {
-                                    pageFeed = pageFeed + '<li class="list-group-item">'
-                                        + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                        + '<div><a href="' + response.feed.data[i].permalink_url
-                                        + '" target="_blank">Link to the post</a></div></li>';
-                                }
-                            }
-                            pageFeed = pageFeed + '</ul>';
-                            document.getElementById('pageFeed').innerHTML = pageFeed;
-                        }
-                    });
-                }
             }
 
             // Post to page
