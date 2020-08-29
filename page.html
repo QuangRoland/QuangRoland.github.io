@@ -101,11 +101,11 @@
                             pageIdList.push(response.accounts.data[i].id);
                             pageTokenList.push(response.accounts.data[i].access_token);
                         }
-                        console.log("Here 1");
+                        getPageFeed();
                     }
                 });
-                console.log("Here 2");
-                setTimeout('getPageFeed()', 1000);
+
+                //setTimeout('getPageFeed()', 1000);
             }
 
             // Get page feed
