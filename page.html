@@ -101,9 +101,10 @@
                             pageIdList.push(response.accounts.data[i].id);
                             pageTokenList.push(response.accounts.data[i].access_token);
                         }
+                        console.log("Here 1");
                     }
                 });
-
+                console.log("Here 2");
                 setTimeout('getPageFeed()', 1000);
             }
 
