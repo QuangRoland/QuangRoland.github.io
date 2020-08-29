@@ -105,7 +105,7 @@
                     }
                 });
 
-                //setTimeout('getPageFeed()', 1000);
+                // setTimeout('getPageFeed()', 1000);
             }
 
             // Get page feed
@@ -128,13 +128,14 @@
                                 }
                             }
                             pageFeed = pageFeed + '</ul>';
+                            document.getElementById('pageFeed').innerHTML = pageFeed;
                         }
                     });
                 }
 
-                setTimeout(function() { 
-                    document.getElementById('pageFeed').innerHTML = pageFeed;
-                }, 1000);
+                // setTimeout(function() { 
+                //     document.getElementById('pageFeed').innerHTML = pageFeed;
+                // }, 1000);
             }
 
             // Post to page
