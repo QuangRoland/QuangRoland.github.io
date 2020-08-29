@@ -71,11 +71,15 @@
                 if (isLoggedIn) {
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
                     document.getElementById('pageFeed').setAttribute('style', 'display:block');
+                    document.getElementById('postToPageHeading').setAttribute('style', 'display:block');
+                    document.getElementById('postToPageMessage').setAttribute('style', 'display:block');
                     document.getElementById('postToPageButton').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
                     document.getElementById('pageFeed').setAttribute('style', 'display:none');
+                    document.getElementById('postToPageHeading').setAttribute('style', 'display:none');
+                    document.getElementById('postToPageMessage').setAttribute('style', 'display:none');
                     document.getElementById('postToPageButton').setAttribute('style', 'display:none');
                 }
             }
@@ -174,8 +178,8 @@
             <div id="pageFeed"></div>
 
             <!-- Post to Page -->
-            <h3>Post to Page</h3>
-            <input type="text" id="message"></input>
+            <h3 id="postToPageHeading" style="display:none">Post to Page</h3>
+            <input type="text" id="postToPageMessage" style="display:none"></input>
             <button id="postToPageButton" onclick="postToPage()" style="display:none">Post to Page</button>
         </div>
     </body>
