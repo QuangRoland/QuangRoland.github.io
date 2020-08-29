@@ -133,7 +133,7 @@
 
             // Post to page
             function postToPage() {
-                var message = document.getElementById('message').value;
+                var message = document.getElementById('postToPageMessage').value;
                 for (var i in pageIdList) {
                     FB.api('/' + pageIdList[i] + '/feed', 'post', { message:message, access_token:pageTokenList[i] }, function (response) {
                         if(response && !response.error) {
