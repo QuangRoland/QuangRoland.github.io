@@ -57,9 +57,10 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    let result = await getUserProfile();
+                    console.log('here 0');
+                    let a = await getUserProfile();
                     console.log('here 2');
-                    console.log(result);
+                    console.log(a);
                     getUserFeed();
                 }
                 else {
