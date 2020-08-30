@@ -53,15 +53,12 @@
             }
 
             // Called with the results from FB.getLoginStatus()
-            async function statusChangeCallback(response) {
+            function statusChangeCallback(response) {
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    console.log('here 0');
-                    await getUserProfile();
-                    console.log('here 2');
-                    await getUserFeed();
-                    console.log('here 4');
+                    getUserProfile();
+                    getUserFeed();
                 }
                 else {
                     console.log('Not Logged in');
@@ -92,30 +89,34 @@
             }
 
             // Get user profile
-            function getUserProfile() {
+            async function getUserProfile() {
+                let response = await getUserProfileFromAPI();
+
+                if(response && !response.error) {
+                    console.log('User Profile:');
+                    console.log(response);
+
+                    var userProfile = '<h3>User Profile</h3>'
+                        + '<ul class="list-group">'
+                        + '<li class="list-group-item">ID: ' + response.id + '</li>'
+                        + '<li class="list-group-item">Name: ' + response.name + '</li>'
+                        + '<li class="list-group-item">Gender: ' + response.gender + '</li>'
+                        + '<li class="list-group-item">Birthday: ' + response.birthday + '</li>'
+                        + '<li class="list-group-item">Hometown: ' + response.hometown.name + '</li>'
+                        + '<li class="list-group-item">Email: ' + response.email + '</li>'
+                        + '<li class="list-group-item"><a href="' + response.link + '" target="_blank">Link to profile page</a></li>'
+                        + '</ul>';
+
+                    document.getElementById('userProfile').innerHTML = userProfile;
+                }
+                else {
+                    console.log(response);
+                }
+            }
+
+            function getUserProfileFromAPI() {
                 return new Promise((resolve, reject) => {
                     FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
-                        if(response && !response.error) {
-                            console.log('User Profile:');
-                            console.log(response);
-
-                            var userProfile = '<h3>User Profile</h3>'
-                                + '<ul class="list-group">'
-                                + '<li class="list-group-item">ID: ' + response.id + '</li>'
-                                + '<li class="list-group-item">Name: ' + response.name + '</li>'
-                                + '<li class="list-group-item">Gender: ' + response.gender + '</li>'
-                                + '<li class="list-group-item">Birthday: ' + response.birthday + '</li>'
-                                + '<li class="list-group-item">Hometown: ' + response.hometown.name + '</li>'
-                                + '<li class="list-group-item">Email: ' + response.email + '</li>'
-                                + '<li class="list-group-item"><a href="' + response.link + '" target="_blank">Link to profile page</a></li>'
-                                + '</ul>';
-
-                            document.getElementById('userProfile').innerHTML = userProfile;
-                        }
-                        else {
-                            console.log(response);
-                        }
-                        console.log('here 1');
                         resolve(response);
                     });
                 });
