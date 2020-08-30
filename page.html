@@ -113,7 +113,7 @@
 
                                     pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
                                         + '<ul class="list-group">';
-                                    if (response.feed.data) {
+                                    if (response.feed) {
                                         for (var i in response.feed.data) {
                                             if (response.feed.data[i].message) {
                                                 pageFeed = pageFeed + '<li class="list-group-item">'
