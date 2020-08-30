@@ -108,7 +108,7 @@
                         var pageFeed = '<h3>Page Feed</h3>';
                         for (var i in pageIdList) {
                             // Get page feed
-                            FB.api('/' + pageIdList[i] + '?fields=name,feed{id,message,permalink_url,comments{message}}', function(response) {
+                            FB.api('/' + pageIdList[i] + '?fields=name,feed{id,message,permalink_url,comments{message}}', async function(response) {
                                 if(response && !response.error) {
                                     console.log(response.name + ' Feed:');
                                     console.log(response);
@@ -123,7 +123,7 @@
                                                     + '<div><a href="' + response.feed.data[i].permalink_url
                                                     + '" target="_blank">Link to the post</a></div>';
 
-                                                FB.api('/' + response.feed.data[i].id + '?fields=id,message,likes.summary(total_count)', function(response) {
+                                                await FB.api('/' + response.feed.data[i].id + '?fields=id,message,likes.summary(total_count)', function(response) {
                                                     if(response && !response.error && response.likes.summary.total_count > 0) {
                                                         // console.log(response.message + ' Like Count:');
                                                         // console.log(response);
