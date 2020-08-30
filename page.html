@@ -97,6 +97,7 @@
 
             // Get page feed
             function getPageFeed() {
+                // Get page list that the user admins
                 FB.api('/me?fields=accounts', function(response) {
                     if(response && !response.error) {
                         for (var i in response.accounts.data) {
@@ -106,7 +107,8 @@
 
                         var pageFeed = '<h3>Page Feed</h3>';
                         for (var i in pageIdList) {
-                            FB.api('/' + pageIdList[i] + '?fields=name,feed{message,permalink_url,comments{message}}', function(response) {
+                            // Get page feed
+                            FB.api('/' + pageIdList[i] + '?fields=name,feed{id,message,permalink_url,comments{message}}', function(response) {
                                 if(response && !response.error) {
                                     console.log(response.name + ' Feed:');
                                     console.log(response);
@@ -120,6 +122,15 @@
                                                     + '<div>Message: ' + response.feed.data[i].message + '</div>'
                                                     + '<div><a href="' + response.feed.data[i].permalink_url
                                                     + '" target="_blank">Link to the post</a></div>';
+
+                                                FB.api('/' + response.feed.data[i].id + '?fields=id,message,likes.summary(total_count)', function(response) {
+                                                    if(response && !response.error) {
+                                                        console.log(response.message + ' Like Count:');
+                                                        console.log(response);
+
+                                                        pageFeed = pageFeed + '<div>Total Like Count: ' + response.likes.summary.total_count + '</div>';
+                                                    }
+                                                });
 
                                                 if (response.feed.data[i].comments) {
                                                     for (var j in response.feed.data[i].comments.data) {
