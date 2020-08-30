@@ -53,11 +53,13 @@
             }
 
             // Called with the results from FB.getLoginStatus()
-            function statusChangeCallback(response) {
+            async function statusChangeCallback(response) {
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    getUserProfile();
+                    let result = await getUserProfile();
+                    console.log('here 2');
+                    console.log(result);
                     getUserFeed();
                 }
                 else {
@@ -90,6 +92,8 @@
 
             // Get user profile
             function getUserProfile() {
+                return new Promise((resolve, reject) => {
+
                 FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
                         console.log('User Profile:');
@@ -111,6 +115,10 @@
                     else {
                         console.log(response);
                     }
+                    console.log('here 1');
+                    resolve(response);
+                });
+
                 });
             }
 
