@@ -120,12 +120,12 @@
                                                 + '<div><a href="' + response.feed.data[i].permalink_url
                                                 + '" target="_blank">Link to the post</a></div>';
 
-                                            for (var j in response.feed.data[i].comments.data) {
-                                                if (response.feed.data[i].comments.data[j].message) {
-                                                    pageFeed = pageFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message
-                                                    + '</div>';
-                                                }
-                                            }
+                                            // for (var j in response.feed.data[i].comments.data) {
+                                            //     if (response.feed.data[i].comments.data[j].message) {
+                                            //         pageFeed = pageFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message
+                                            //         + '</div>';
+                                            //     }
+                                            // }
                                             
                                             pageFeed = pageFeed + '</li>';
                                         }
