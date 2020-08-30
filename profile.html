@@ -58,7 +58,7 @@
                     console.log('Logged in');
                     displayElements(true);
                     getUserProfile();
-                    getUserFeed();
+                    // getUserFeed();
                 }
                 else {
                     console.log('Not Logged in');
@@ -89,8 +89,8 @@
             }
 
             // Get user profile
-            function getUserProfile() {
-                FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
+            async function getUserProfile() {
+                let a = await FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
                         console.log('User Profile:');
                         console.log(response);
@@ -107,11 +107,14 @@
                             + '</ul>';
 
                         document.getElementById('userProfile').innerHTML = userProfile;
+                        console.log('Here 1');
                     }
                     else {
                         console.log(response);
                     }
                 });
+                console.log('Here 2');
+                getUserFeed();
             }
 
             // Get user feed
@@ -146,6 +149,7 @@
                         console.log(response);
                     }
                 });
+                console.log('Here 3');
             }
 
 
