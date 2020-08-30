@@ -106,7 +106,7 @@
 
                         var pageFeed = '<h3>Page Feed</h3>';
                         for (var i in pageIdList) {
-                            FB.api('/' + pageIdList[i] + '?fields=name,feed{message,permalink_url}', function(response) {
+                            FB.api('/' + pageIdList[i] + '?fields=name,feed{message,permalink_url},comments{message}', function(response) {
                                 if(response && !response.error) {
                                     console.log(response.name + ' Feed:');
                                     console.log(response);
@@ -118,7 +118,16 @@
                                             pageFeed = pageFeed + '<li class="list-group-item">'
                                                 + '<div>Message: ' + response.feed.data[i].message + '</div>'
                                                 + '<div><a href="' + response.feed.data[i].permalink_url
-                                                + '" target="_blank">Link to the post</a></div></li>';
+                                                + '" target="_blank">Link to the post</a></div>';
+
+                                            for (var j in response.feed.data[i].comments.data) {
+                                                if (response.feed.data[i].comments.data[j].message) {
+                                                    pageFeed = pageFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message
+                                                    + '</div>';
+                                                }
+                                            }
+                                            
+                                            pageFeed = pageFeed + '</li>';
                                         }
                                     }
                                     pageFeed = pageFeed + '</ul>';
