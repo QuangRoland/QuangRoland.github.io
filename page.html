@@ -113,29 +113,36 @@
 
                                     pageFeed = pageFeed + '<h3>' + response.name + '</h3>'
                                         + '<ul class="list-group">';
-                                    for (var i in response.feed.data) {
-                                        if (response.feed.data[i].message) {
-                                            pageFeed = pageFeed + '<li class="list-group-item">'
-                                                + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                                + '<div><a href="' + response.feed.data[i].permalink_url
-                                                + '" target="_blank">Link to the post</a></div>';
+                                    if (response.feed.data) {
+                                        for (var i in response.feed.data) {
+                                            if (response.feed.data[i].message) {
+                                                pageFeed = pageFeed + '<li class="list-group-item">'
+                                                    + '<div>Message: ' + response.feed.data[i].message + '</div>'
+                                                    + '<div><a href="' + response.feed.data[i].permalink_url
+                                                    + '" target="_blank">Link to the post</a></div>';
 
-                                            for (var j in response.feed.data[i].comments.data) {
-                                                if (response.feed.data[i].comments.data[j].message) {
-                                                    pageFeed = pageFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message
-                                                    + '</div>';
+                                                if (response.feed.data[i].comments.data) {
+                                                    for (var j in response.feed.data[i].comments.data) {
+                                                        if (response.feed.data[i].comments.data[j].message) {
+                                                            pageFeed = pageFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message + '</div>';
+                                                        }
+                                                    }
                                                 }
+                                                pageFeed = pageFeed + '</li>';
                                             }
-                                            
-                                            pageFeed = pageFeed + '</li>';
                                         }
                                     }
                                     pageFeed = pageFeed + '</ul>';
-
                                     document.getElementById('pageFeed').innerHTML = pageFeed;
+                                }
+                                else {
+                                    console.log(response);
                                 }
                             });
                         }
+                    }
+                    else {
+                        console.log(response);
                     }
                 });
             }

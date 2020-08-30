@@ -108,6 +108,9 @@
 
                         document.getElementById('userProfile').innerHTML = userProfile;
                     }
+                    else {
+                        console.log(response);
+                    }
                 });
             }
 
@@ -120,24 +123,27 @@
 
                         var userFeed = '<h3>User Feed</h3>'
                             + '<ul class="list-group">';
-                        for (var i in response.feed.data) {
-                            if (response.feed.data[i].message) {
-                                userFeed = userFeed + '<li class="list-group-item">'
-                                    + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                    + '<div><a href="' + response.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
+                        if (response.feed.data) {
+                            for (var i in response.feed.data) {
+                                if (response.feed.data[i].message) {
+                                    userFeed = userFeed + '<li class="list-group-item">'
+                                        + '<div>Message: ' + response.feed.data[i].message + '</div>'
+                                        + '<div><a href="' + response.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
 
-                                    for (var j in response.feed.data[i].comments.data) {
-                                        if (response.feed.data[i].comments.data[j].message) {
-                                            userFeed = userFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message + '</div>';
+                                        for (var j in response.feed.data[i].comments.data) {
+                                            if (response.feed.data[i].comments.data[j].message) {
+                                                userFeed = userFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message + '</div>';
+                                            }
                                         }
-                                    }
-
-                                userFeed = userFeed + '</li>';
+                                    userFeed = userFeed + '</li>';
+                                }
                             }
                         }
                         userFeed = userFeed + '</ul>';
-
                         document.getElementById('userFeed').innerHTML = userFeed;
+                    }
+                    else {
+                        console.log(response);
                     }
                 });
             }
