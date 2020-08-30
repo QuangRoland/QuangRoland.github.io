@@ -90,27 +90,27 @@
 
             // Display user profile
             async function displayUserProfile() {
-                var response = await getUserProfileFromAPI();
+                var userProfileJSON = await getUserProfileFromAPI();
 
-                if(response && !response.error) {
+                if(userProfileJSON && !userProfileJSON.error) {
                     console.log('User Profile:');
-                    console.log(response);
+                    console.log(userProfileJSON);
 
-                    var userProfile = '<h3>User Profile</h3>'
+                    var userProfileString = '<h3>User Profile</h3>'
                         + '<ul class="list-group">'
-                        + '<li class="list-group-item">ID: ' + response.id + '</li>'
-                        + '<li class="list-group-item">Name: ' + response.name + '</li>'
-                        + '<li class="list-group-item">Gender: ' + response.gender + '</li>'
-                        + '<li class="list-group-item">Birthday: ' + response.birthday + '</li>'
-                        + '<li class="list-group-item">Hometown: ' + response.hometown.name + '</li>'
-                        + '<li class="list-group-item">Email: ' + response.email + '</li>'
-                        + '<li class="list-group-item"><a href="' + response.link + '" target="_blank">Link to profile page</a></li>'
+                        + '<li class="list-group-item">ID: ' + userProfileJSON.id + '</li>'
+                        + '<li class="list-group-item">Name: ' + userProfileJSON.name + '</li>'
+                        + '<li class="list-group-item">Gender: ' + userProfileJSON.gender + '</li>'
+                        + '<li class="list-group-item">Birthday: ' + userProfileJSON.birthday + '</li>'
+                        + '<li class="list-group-item">Hometown: ' + userProfileJSON.hometown.name + '</li>'
+                        + '<li class="list-group-item">Email: ' + userProfileJSON.email + '</li>'
+                        + '<li class="list-group-item"><a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a></li>'
                         + '</ul>';
 
-                    document.getElementById('userProfile').innerHTML = userProfile;
+                    document.getElementById('userProfile').innerHTML = userProfileString;
                 }
                 else {
-                    console.log(response);
+                    console.log(userProfileJSON);
                 }
             }
 
@@ -125,35 +125,35 @@
 
             // Display user feed
             async function displayUserFeed() {
-                var response = await getUserFeedFromAPI();
+                var userFeedJSON = await getUserFeedFromAPI();
 
-                if(response && !response.error) {
+                if(userFeedJSON && !userFeedJSON.error) {
                     console.log('User Feed:');
-                    console.log(response);
+                    console.log(userFeedJSON);
 
-                    var userFeed = '<h3>User Feed</h3>'
+                    var userFeedString = '<h3>User Feed</h3>'
                         + '<ul class="list-group">';
-                    if (response.feed) {
-                        for (var i in response.feed.data) {
-                            if (response.feed.data[i].message) {
-                                userFeed = userFeed + '<li class="list-group-item">'
-                                    + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                    + '<div><a href="' + response.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
+                    if (userFeedJSON.feed) {
+                        for (var i in userFeedJSON.feed.data) {
+                            if (userFeedJSON.feed.data[i].message) {
+                                userFeedString = userFeedString + '<li class="list-group-item">'
+                                    + '<div>Message: ' + userFeedJSON.feed.data[i].message + '</div>'
+                                    + '<div><a href="' + userFeedJSON.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
 
-                                    for (var j in response.feed.data[i].comments.data) {
-                                        if (response.feed.data[i].comments.data[j].message) {
-                                            userFeed = userFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message + '</div>';
+                                    for (var j in userFeedJSON.feed.data[i].comments.data) {
+                                        if (userFeedJSON.feed.data[i].comments.data[j].message) {
+                                            userFeedString = userFeedString + '<div>Comment: ' + userFeedJSON.feed.data[i].comments.data[j].message + '</div>';
                                         }
                                     }
-                                userFeed = userFeed + '</li>';
+                                    userFeedString = userFeedString + '</li>';
                             }
                         }
                     }
-                    userFeed = userFeed + '</ul>';
-                    document.getElementById('userFeed').innerHTML = userFeed;
+                    userFeedString = userFeedString + '</ul>';
+                    document.getElementById('userFeed').innerHTML = userFeedString;
                 }
                 else {
-                    console.log(response);
+                    console.log(userFeedJSON);
                 }
             }
 
