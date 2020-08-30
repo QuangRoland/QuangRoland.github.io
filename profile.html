@@ -60,7 +60,8 @@
                     console.log('here 0');
                     await getUserProfile();
                     console.log('here 2');
-                    getUserFeed();
+                    await getUserFeed();
+                    console.log('here 4');
                 }
                 else {
                     console.log('Not Logged in');
@@ -93,66 +94,68 @@
             // Get user profile
             function getUserProfile() {
                 return new Promise((resolve, reject) => {
+                    FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
+                        if(response && !response.error) {
+                            console.log('User Profile:');
+                            console.log(response);
 
-                FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
-                    if(response && !response.error) {
-                        console.log('User Profile:');
-                        console.log(response);
+                            var userProfile = '<h3>User Profile</h3>'
+                                + '<ul class="list-group">'
+                                + '<li class="list-group-item">ID: ' + response.id + '</li>'
+                                + '<li class="list-group-item">Name: ' + response.name + '</li>'
+                                + '<li class="list-group-item">Gender: ' + response.gender + '</li>'
+                                + '<li class="list-group-item">Birthday: ' + response.birthday + '</li>'
+                                + '<li class="list-group-item">Hometown: ' + response.hometown.name + '</li>'
+                                + '<li class="list-group-item">Email: ' + response.email + '</li>'
+                                + '<li class="list-group-item"><a href="' + response.link + '" target="_blank">Link to profile page</a></li>'
+                                + '</ul>';
 
-                        var userProfile = '<h3>User Profile</h3>'
-                            + '<ul class="list-group">'
-                            + '<li class="list-group-item">ID: ' + response.id + '</li>'
-                            + '<li class="list-group-item">Name: ' + response.name + '</li>'
-                            + '<li class="list-group-item">Gender: ' + response.gender + '</li>'
-                            + '<li class="list-group-item">Birthday: ' + response.birthday + '</li>'
-                            + '<li class="list-group-item">Hometown: ' + response.hometown.name + '</li>'
-                            + '<li class="list-group-item">Email: ' + response.email + '</li>'
-                            + '<li class="list-group-item"><a href="' + response.link + '" target="_blank">Link to profile page</a></li>'
-                            + '</ul>';
-
-                        document.getElementById('userProfile').innerHTML = userProfile;
-                    }
-                    else {
-                        console.log(response);
-                    }
-                    console.log('here 1');
-                    resolve(response);
-                });
-
+                            document.getElementById('userProfile').innerHTML = userProfile;
+                        }
+                        else {
+                            console.log(response);
+                        }
+                        console.log('here 1');
+                        resolve(response);
+                    });
                 });
             }
 
             // Get user feed
             function getUserFeed() {
-                FB.api('/me?fields=feed.limit(2){message,permalink_url,comments{message}}', function(response) {
-                    if(response && !response.error) {
-                        console.log('User Feed:');
-                        console.log(response);
+                return new Promise((resolve, reject) => {
+                    FB.api('/me?fields=feed.limit(2){message,permalink_url,comments{message}}', function(response) {
+                        if(response && !response.error) {
+                            console.log('User Feed:');
+                            console.log(response);
 
-                        var userFeed = '<h3>User Feed</h3>'
-                            + '<ul class="list-group">';
-                        if (response.feed) {
-                            for (var i in response.feed.data) {
-                                if (response.feed.data[i].message) {
-                                    userFeed = userFeed + '<li class="list-group-item">'
-                                        + '<div>Message: ' + response.feed.data[i].message + '</div>'
-                                        + '<div><a href="' + response.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
+                            var userFeed = '<h3>User Feed</h3>'
+                                + '<ul class="list-group">';
+                            if (response.feed) {
+                                for (var i in response.feed.data) {
+                                    if (response.feed.data[i].message) {
+                                        userFeed = userFeed + '<li class="list-group-item">'
+                                            + '<div>Message: ' + response.feed.data[i].message + '</div>'
+                                            + '<div><a href="' + response.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
 
-                                        for (var j in response.feed.data[i].comments.data) {
-                                            if (response.feed.data[i].comments.data[j].message) {
-                                                userFeed = userFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message + '</div>';
+                                            for (var j in response.feed.data[i].comments.data) {
+                                                if (response.feed.data[i].comments.data[j].message) {
+                                                    userFeed = userFeed + '<div>Comment: ' + response.feed.data[i].comments.data[j].message + '</div>';
+                                                }
                                             }
-                                        }
-                                    userFeed = userFeed + '</li>';
+                                        userFeed = userFeed + '</li>';
+                                    }
                                 }
                             }
+                            userFeed = userFeed + '</ul>';
+                            document.getElementById('userFeed').innerHTML = userFeed;
                         }
-                        userFeed = userFeed + '</ul>';
-                        document.getElementById('userFeed').innerHTML = userFeed;
-                    }
-                    else {
-                        console.log(response);
-                    }
+                        else {
+                            console.log(response);
+                        }
+                        console.log('here 3');
+                        resolve(response);
+                    });
                 });
             }
 
