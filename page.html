@@ -123,7 +123,7 @@
                                                     + '<div><a href="' + response.feed.data[i].permalink_url
                                                     + '" target="_blank">Link to the post</a></div>';
 
-                                                await FB.api('/' + response.feed.data[i].id + '?fields=id,message,likes.summary(total_count)', function(response) {
+                                                let a = await FB.api('/' + response.feed.data[i].id + '?fields=id,message,likes.summary(total_count)', function(response) {
                                                     if(response && !response.error && response.likes.summary.total_count > 0) {
                                                         // console.log(response.message + ' Like Count:');
                                                         // console.log(response);
