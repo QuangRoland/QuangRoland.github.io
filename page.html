@@ -111,7 +111,7 @@
 
                 var pageFeedString = '<h3>Page Feed</h3>';
                 for (var i in pageIdList) {
-                    var pageFeedJSON = await getPageFeedFromAPI();
+                    var pageFeedJSON = await getPageFeedFromAPI(pageIdList[i]);
 
                     if(pageFeedJSON && !pageFeedJSON.error) {
                         console.log(pageFeedJSON.name + ' Feed:');
@@ -120,17 +120,17 @@
                         if (pageFeedJSON.feed) {
                             pageFeedString = pageFeedString + '<h3>' + pageFeedJSON.name + '</h3>'
                                 + '<ul class="list-group">';
-                            for (var i in pageFeedJSON.feed.data) {
-                                if (pageFeedJSON.feed.data[i].message) {
+                            for (var j in pageFeedJSON.feed.data) {
+                                if (pageFeedJSON.feed.data[j].message) {
                                     pageFeedString = pageFeedString + '<li class="list-group-item">'
-                                        + '<div>Message: ' + pageFeedJSON.feed.data[i].message + '</div>'
-                                        + '<div><a href="' + pageFeedJSON.feed.data[i].permalink_url
+                                        + '<div>Message: ' + pageFeedJSON.feed.data[j].message + '</div>'
+                                        + '<div><a href="' + pageFeedJSON.feed.data[j].permalink_url
                                         + '" target="_blank">Link to the post</a></div>';
 
-                                    if (pageFeedJSON.feed.data[i].comments) {
-                                        for (var j in pageFeedJSON.feed.data[i].comments.data) {
-                                            if (pageFeedJSON.feed.data[i].comments.data[j].message) {
-                                                pageFeedString = pageFeedString + '<div>Comment: ' + pageFeedJSON.feed.data[i].comments.data[j].message + '</div>';
+                                    if (pageFeedJSON.feed.data[j].comments) {
+                                        for (var k in pageFeedJSON.feed.data[j].comments.data) {
+                                            if (pageFeedJSON.feed.data[j].comments.data[k].message) {
+                                                pageFeedString = pageFeedString + '<div>Comment: ' + pageFeedJSON.feed.data[j].comments.data[k].message + '</div>';
                                             }
                                         }
                                     }
@@ -159,9 +159,9 @@
             }
 
             // Get page feed from API
-            function getPageFeedFromAPI() {
+            function getPageFeedFromAPI(pageId) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/' + pageIdList[i] + '?fields=name,feed{id,message,permalink_url,comments{message}}', function(response) {
+                    FB.api('/' + pageId + '?fields=name,feed{id,message,permalink_url,comments{message}}', function(response) {
                         resolve(response);
                     });
                 });
