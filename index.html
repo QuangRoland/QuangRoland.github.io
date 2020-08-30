@@ -46,10 +46,13 @@
             } (document, 'script', 'facebook-jssdk'));
 
             // Check login state
-            function checkLoginState() {
-                FB.getLoginStatus(function(response) {
-                    statusChangeCallback(response);
-                });
+            async function checkLoginState() {
+                // FB.getLoginStatus(function(response) {
+                //     statusChangeCallback(response);
+                // });
+
+                let a = await FB.getLoginStatus();
+                console.log(a);
             }
 
             // Called with the results from FB.getLoginStatus()

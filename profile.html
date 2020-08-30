@@ -89,8 +89,8 @@
             }
 
             // Get user profile
-            async function getUserProfile() {
-                let a = await FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
+            function getUserProfile() {
+                FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
                         console.log('User Profile:');
                         console.log(response);
@@ -112,7 +112,6 @@
                         console.log(response);
                     }
                 });
-                console.log(a);
             }
 
             // Get user feed
