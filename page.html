@@ -104,9 +104,11 @@
                     console.log('Page List:');
                     console.log(pageListJSON);
 
-                    for (var i in pageListJSON.accounts.data) {
-                        pageIdList.push(pageListJSON.accounts.data[i].id);
-                        pageTokenList.push(pageListJSON.accounts.data[i].access_token);
+                    if (pageListJSON.accounts) {
+                        for (var i in pageListJSON.accounts.data) {
+                            pageIdList.push(pageListJSON.accounts.data[i].id);
+                            pageTokenList.push(pageListJSON.accounts.data[i].access_token);
+                        }
                     }
                 }
                 else {
