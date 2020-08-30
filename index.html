@@ -47,11 +47,12 @@
 
             // Check login state
             async function checkLoginState() {
-                // FB.getLoginStatus(function(response) {
-                //     statusChangeCallback(response);
-                // });
-
-                let a = await FB.getLoginStatus();
+                let a = await FB.getLoginStatus(function(response) {
+                    //statusChangeCallback(response);
+                    return new Promise((resolve, reject) => {
+                        resolve(response);
+                    });
+                });
                 console.log(a);
             }
 
