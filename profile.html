@@ -90,7 +90,7 @@
 
             // Get user profile
             function getUserProfile() {
-                FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
+                let a = FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
                         console.log('User Profile:');
                         console.log(response);
@@ -112,6 +112,7 @@
                         console.log(response);
                     }
                 });
+                console.log(a);
             }
 
             // Get user feed
