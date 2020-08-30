@@ -99,6 +99,7 @@
             async function displayPageFeed() {
                 // Get the list of pages that the user admins
                 var pageListJSON = await getPageListFromAPI();
+                console.log('here 2');
 
                 if(pageListJSON && !pageListJSON.error) {
                     for (var i in pageListJSON.accounts.data) {
@@ -115,6 +116,7 @@
                 for (var i in pageIdList) {
                     // Get the feed of a page in the list
                     var pageFeedJSON = await getPageFeedFromAPI(pageIdList[i]);
+                    console.log('here 4');
 
                     if(pageFeedJSON && !pageFeedJSON.error) {
                         console.log(pageFeedJSON.name + ' Feed:');
@@ -133,6 +135,7 @@
 
                                     // Get the total like count of a post
                                     var pagePostLikeJSON = await getPagePostLikeFromAPI(pageFeedJSON.feed.data[j].id);
+                                    console.log('here 6');
 
                                     if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
                                         pageFeedString = pageFeedString + '<div>Total Like Count: ' + pagePostLikeJSON.likes.summary.total_count + '</div>';
@@ -163,6 +166,7 @@
             function getPageListFromAPI() {
                 return new Promise((resolve, reject) => {
                     FB.api('/me?fields=accounts', function(response) {
+                        console.log('here 1');
                         resolve(response);
                     });
                 });
@@ -172,6 +176,7 @@
             function getPageFeedFromAPI(pageId) {
                 return new Promise((resolve, reject) => {
                     FB.api('/' + pageId + '?fields=name,feed{id,message,permalink_url,comments{message}}', function(response) {
+                        console.log('here 3');
                         resolve(response);
                     });
                 });
@@ -181,6 +186,7 @@
             function getPagePostLikeFromAPI(pagePostId) {
                 return new Promise((resolve, reject) => {
                     FB.api('/' + pagePostId + '?fields=id,message,likes.summary(total_count)', function(response) {
+                        console.log('here 5');
                         resolve(response);
                     });
                 });
