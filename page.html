@@ -97,6 +97,7 @@
 
             // Display page feed
             async function displayPageFeed() {
+                // Get the list of pages that the user admins
                 var pageListJSON = await getPageListFromAPI();
 
                 if(pageListJSON && !pageListJSON.error) {
@@ -109,8 +110,10 @@
                     console.log(pageListJSON);
                 }
 
+                // Build the page feed
                 var pageFeedString = '<h3>Page Feed</h3>';
                 for (var i in pageIdList) {
+                    // Get the feed of a page in the list
                     var pageFeedJSON = await getPageFeedFromAPI(pageIdList[i]);
 
                     if(pageFeedJSON && !pageFeedJSON.error) {
@@ -121,12 +124,21 @@
                             pageFeedString = pageFeedString + '<h3>' + pageFeedJSON.name + '</h3>'
                                 + '<ul class="list-group">';
                             for (var j in pageFeedJSON.feed.data) {
+                                // Build a page post
                                 if (pageFeedJSON.feed.data[j].message) {
                                     pageFeedString = pageFeedString + '<li class="list-group-item">'
                                         + '<div>Message: ' + pageFeedJSON.feed.data[j].message + '</div>'
                                         + '<div><a href="' + pageFeedJSON.feed.data[j].permalink_url
                                         + '" target="_blank">Link to the post</a></div>';
 
+                                    // Get the total like count of a post
+                                    var pagePostLikeJSON = await getPagePostLikeFromAPI(pageFeedJSON.feed.data[j].id);
+
+                                    if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
+                                        pageFeedString = pageFeedString + '<div>Total Like Count: ' + pagePostLikeJSON.likes.summary.total_count + '</div>';
+                                    }
+
+                                    // Build the comments in a post
                                     if (pageFeedJSON.feed.data[j].comments) {
                                         for (var k in pageFeedJSON.feed.data[j].comments.data) {
                                             if (pageFeedJSON.feed.data[j].comments.data[k].message) {
@@ -145,8 +157,6 @@
                     }
                 }
                 document.getElementById('pageFeed').innerHTML = pageFeedString;
-
-
             }
 
             // Get page list from API
@@ -167,7 +177,14 @@
                 });
             }
 
-
+            // Get page post like from API
+            function getPagePostLikeFromAPI(pagePostId) {
+                return new Promise((resolve, reject) => {
+                    FB.api('/' + pagePostId + '?fields=id,message,likes.summary(total_count)', function(response) {
+                        resolve(response);
+                    });
+                });
+            }
 
 
 
@@ -204,8 +221,8 @@
 
             //                                     let a = await FB.api('/' + response.feed.data[i].id + '?fields=id,message,likes.summary(total_count)', function(response) {
             //                                         if(response && !response.error && response.likes.summary.total_count > 0) {
-            //                                             // console.log(response.message + ' Like Count:');
-            //                                             // console.log(response);
+            //                                             console.log(response.message + ' Like Count:');
+            //                                             console.log(response);
 
             //                                             pageFeed = pageFeed + '<div>Total Like Count: ' + response.likes.summary.total_count + '</div>';
 
