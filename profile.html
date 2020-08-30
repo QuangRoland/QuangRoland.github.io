@@ -89,8 +89,8 @@
             }
 
             // Get user profile
-            function getUserProfile() {
-                let a = FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
+            async function getUserProfile() {
+                let a = await FB.api('/me?fields=id, name, gender, birthday, hometown, email, link', function(response) {
                     if(response && !response.error) {
                         console.log('User Profile:');
                         console.log(response);
