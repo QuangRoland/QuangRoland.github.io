@@ -116,8 +116,15 @@
                 }
 
                 // Build the page feed
-                var pageFeedString = '<h3>Page Feed</h3>';
-                for (var i in pageIdList) {
+                var pageFeed = document.createElement('div');
+                document.getElementById('pageFeed').appendChild(pageFeed);
+
+                // Create title
+                var title = document.createElement('h3');
+                title.innerHTML = "Page Feed";
+                pageFeed.appendChild(title);
+
+                for (let i in pageIdList) {
                     // Get the feed of a page in the list
                     var pageFeedJSON = await getPageFeedFromAPI(pageIdList[i]);
 
@@ -126,35 +133,83 @@
                         console.log(pageFeedJSON);
 
                         if (pageFeedJSON.feed) {
-                            pageFeedString = pageFeedString + '<h3>' + pageFeedJSON.name + '</h3>'
-                                + '<ul class="list-group">';
-                            for (var j in pageFeedJSON.feed.data) {
-                                // Build a page post
+                            // Page name
+                            var pageName = document.createElement('h3');
+                            title.innerHTML = pageFeedJSON.name;
+                            pageFeed.appendChild(pageName);
+
+                            // Build page feed
+                            var feed = document.createElement('ul');
+                            feed.className = "list-group";
+                            pageFeed.appendChild(feed);
+
+                            for (let j in pageFeedJSON.feed.data) {
                                 if (pageFeedJSON.feed.data[j].message) {
-                                    pageFeedString = pageFeedString + '<li class="list-group-item">'
-                                        + '<div>Message: ' + pageFeedJSON.feed.data[j].message + '</div>'
-                                        + '<div><a href="' + pageFeedJSON.feed.data[j].permalink_url
-                                        + '" target="_blank">Link to the post</a></div>';
+                                    // Build page post
+                                    var post = document.createElement('li');
+                                    post.className = "list-group-item";
+                                    feed.appendChild(post);
 
-                                    // Get the total like count of a post
-                                    var pagePostLikeJSON = await getPagePostLikeFromAPI(pageFeedJSON.feed.data[j].id);
+                                    // Message
+                                    var message = document.createElement('div');
+                                    message.innerHTML = 'Message: ' + pageFeedJSON.feed.data[j].message;
+                                    post.appendChild(message);
 
-                                    if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
-                                        pageFeedString = pageFeedString + '<div>Total Like Count: ' + pagePostLikeJSON.likes.summary.total_count + '</div>';
-                                    }
+                                    // Link
+                                    var link = document.createElement('div');
+                                    link.innerHTML = '<a href="' + pageFeedJSON.feed.data[j].permalink_url + '" target="_blank">Link to the post</a>';
+                                    post.appendChild(link);
 
-                                    // Build the comments in a post
+                                    // Comment
                                     if (pageFeedJSON.feed.data[j].comments) {
-                                        for (var k in pageFeedJSON.feed.data[j].comments.data) {
+                                        for (let k in pageFeedJSON.feed.data[j].comments.data) {
                                             if (pageFeedJSON.feed.data[j].comments.data[k].message) {
-                                                pageFeedString = pageFeedString + '<div>Comment: ' + pageFeedJSON.feed.data[j].comments.data[k].message + '</div>';
+                                                var comment = document.createElement('div');
+                                                comment.innerHTML = 'Comment: ' + pageFeedJSON.feed.data[j].comments.data[k].message;
+                                                post.appendChild(comment);
                                             }
                                         }
                                     }
-                                    pageFeedString = pageFeedString + '</li>';
+
+
                                 }
                             }
-                            pageFeedString = pageFeedString + '</ul>';
+
+
+
+
+
+
+
+                            // pageFeedString = pageFeedString + '<h3>' + pageFeedJSON.name + '</h3>'
+                            //     + '<ul class="list-group">';
+                            // for (var j in pageFeedJSON.feed.data) {
+                            //     // Build a page post
+                            //     if (pageFeedJSON.feed.data[j].message) {
+                            //         pageFeedString = pageFeedString + '<li class="list-group-item">'
+                            //             + '<div>Message: ' + pageFeedJSON.feed.data[j].message + '</div>'
+                            //             + '<div><a href="' + pageFeedJSON.feed.data[j].permalink_url
+                            //             + '" target="_blank">Link to the post</a></div>';
+
+                            //         // Get the total like count of a post
+                            //         var pagePostLikeJSON = await getPagePostLikeFromAPI(pageFeedJSON.feed.data[j].id);
+
+                            //         if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
+                            //             pageFeedString = pageFeedString + '<div>Total Like Count: ' + pagePostLikeJSON.likes.summary.total_count + '</div>';
+                            //         }
+
+                            //         // Build the comments in a post
+                            //         if (pageFeedJSON.feed.data[j].comments) {
+                            //             for (var k in pageFeedJSON.feed.data[j].comments.data) {
+                            //                 if (pageFeedJSON.feed.data[j].comments.data[k].message) {
+                            //                     pageFeedString = pageFeedString + '<div>Comment: ' + pageFeedJSON.feed.data[j].comments.data[k].message + '</div>';
+                            //                 }
+                            //             }
+                            //         }
+                            //         pageFeedString = pageFeedString + '</li>';
+                            //     }
+                            // }
+                            // pageFeedString = pageFeedString + '</ul>';
                         }
                     }
                     else {
@@ -194,7 +249,7 @@
             // Post to page
             function postToPage() {
                 var message = document.getElementById('postToPageMessage').value;
-                for (var i in pageIdList) {
+                for (let i in pageIdList) {
                     FB.api('/' + pageIdList[i] + '/feed', 'post', { message:message, access_token:pageTokenList[i] }, function (response) {
                         if(response && !response.error) {
                             console.log('Successfully Post');

@@ -189,7 +189,7 @@
                     if (userFeedJSON.feed) {
                         for (let i in userFeedJSON.feed.data) {
                             if (userFeedJSON.feed.data[i].message) {
-                                // Build a post
+                                // Build user post
                                 var post = document.createElement('li');
                                 post.className = "list-group-item";
                                 feed.appendChild(post);
@@ -205,39 +205,18 @@
                                 post.appendChild(link);
 
                                 // Comment
-                                for (let j in userFeedJSON.feed.data[i].comments.data) {
-                                    if (userFeedJSON.feed.data[i].comments.data[j].message) {
-                                        var comment = document.createElement('div');
-                                        comment.innerHTML = 'Comment: ' + userFeedJSON.feed.data[i].comments.data[j].message;
-                                        post.appendChild(comment);
+                                if (userFeedJSON.feed.data[i].comments) {
+                                    for (let j in userFeedJSON.feed.data[i].comments.data) {
+                                        if (userFeedJSON.feed.data[i].comments.data[j].message) {
+                                            var comment = document.createElement('div');
+                                            comment.innerHTML = 'Comment: ' + userFeedJSON.feed.data[i].comments.data[j].message;
+                                            post.appendChild(comment);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-
-
-
-                    // var userFeedString = '<h3>User Feed</h3>'
-                    //     + '<ul class="list-group">';
-                    // if (userFeedJSON.feed) {
-                    //     for (var i in userFeedJSON.feed.data) {
-                    //         if (userFeedJSON.feed.data[i].message) {
-                    //             userFeedString = userFeedString + '<li class="list-group-item">'
-                    //                 + '<div>Message: ' + userFeedJSON.feed.data[i].message + '</div>'
-                    //                 + '<div><a href="' + userFeedJSON.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
-
-                    //                 for (var j in userFeedJSON.feed.data[i].comments.data) {
-                    //                     if (userFeedJSON.feed.data[i].comments.data[j].message) {
-                    //                         userFeedString = userFeedString + '<div>Comment: ' + userFeedJSON.feed.data[i].comments.data[j].message + '</div>';
-                    //                     }
-                    //                 }
-                    //                 userFeedString = userFeedString + '</li>';
-                    //         }
-                    //     }
-                    // }
-                    // userFeedString = userFeedString + '</ul>';
-                    // document.getElementById('userFeed').innerHTML = userFeedString;
                 }
                 else {
                     console.log(userFeedJSON);
