@@ -101,64 +101,55 @@
 
                     // Create title
                     var title = document.createElement('h3');
-                    var titleText = document.createTextNode("User Profile");
-                    title.appendChild(titleText);
+                    title.innerHTML = "User Profile";
                     userProfile.appendChild(title);
 
-                    // Build the user profile
-                    var data = document.createElement('ul');
-                    data.className = "list-group";
-                    userProfile.appendChild(data);
+                    // Build user profile
+                    var profile = document.createElement('ul');
+                    profile.className = "list-group";
+                    userProfile.appendChild(profile);
 
+                    // ID
                     var id = document.createElement('li');
                     id.className = "list-group-item";
                     id.innerHTML = 'ID: ' + userProfileJSON.id;
-                    data.appendChild(id);
+                    profile.appendChild(id);
 
+                    // Name
                     var name = document.createElement('li');
                     name.className = "list-group-item";
                     name.innerHTML = 'Name: ' + userProfileJSON.name;
-                    data.appendChild(name);
+                    profile.appendChild(name);
 
+                    // Gender
                     var gender = document.createElement('li');
                     gender.className = "list-group-item";
                     gender.innerHTML = 'Gender: ' + userProfileJSON.gender;
-                    data.appendChild(gender);
+                    profile.appendChild(gender);
 
+                    // Birthday
                     var birthday = document.createElement('li');
                     birthday.className = "list-group-item";
                     birthday.innerHTML = 'Birthday: ' + userProfileJSON.birthday;
-                    data.appendChild(birthday);
+                    profile.appendChild(birthday);
 
+                    // Hometown
                     var hometown = document.createElement('li');
                     hometown.className = "list-group-item";
                     hometown.innerHTML = 'Hometown: ' + userProfileJSON.hometown.name;
-                    data.appendChild(hometown);
+                    profile.appendChild(hometown);
 
+                    // Email
                     var email = document.createElement('li');
                     email.className = "list-group-item";
                     email.innerHTML = 'Email: ' + userProfileJSON.email;
-                    data.appendChild(email);
+                    profile.appendChild(email);
 
+                    // Link
                     var link = document.createElement('li');
                     link.className = "list-group-item";
                     link.innerHTML = '<a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a>';
-                    data.appendChild(link);
-
-
-
-                    // var userProfileString = '<h3>User Profile</h3>'
-                    //     + '<ul class="list-group">'
-                    //     + '<li class="list-group-item">ID: ' + userProfileJSON.id + '</li>'
-                    //     + '<li class="list-group-item">Name: ' + userProfileJSON.name + '</li>'
-                    //     + '<li class="list-group-item">Gender: ' + userProfileJSON.gender + '</li>'
-                    //     + '<li class="list-group-item">Birthday: ' + userProfileJSON.birthday + '</li>'
-                    //     + '<li class="list-group-item">Hometown: ' + userProfileJSON.hometown.name + '</li>'
-                    //     + '<li class="list-group-item">Email: ' + userProfileJSON.email + '</li>'
-                    //     + '<li class="list-group-item"><a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a></li>'
-                    //     + '</ul>';
-
-                    // document.getElementById('userProfile').innerHTML = userProfileString;
+                    profile.appendChild(link);
                 }
                 else {
                     console.log(userProfileJSON);
@@ -182,26 +173,71 @@
                     console.log('User Feed:');
                     console.log(userFeedJSON);
 
-                    var userFeedString = '<h3>User Feed</h3>'
-                        + '<ul class="list-group">';
-                    if (userFeedJSON.feed) {
-                        for (var i in userFeedJSON.feed.data) {
-                            if (userFeedJSON.feed.data[i].message) {
-                                userFeedString = userFeedString + '<li class="list-group-item">'
-                                    + '<div>Message: ' + userFeedJSON.feed.data[i].message + '</div>'
-                                    + '<div><a href="' + userFeedJSON.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
+                    var userFeed = document.createElement('div');
+                    document.getElementById('userFeed').appendChild(userFeed);
 
-                                    for (var j in userFeedJSON.feed.data[i].comments.data) {
-                                        if (userFeedJSON.feed.data[i].comments.data[j].message) {
-                                            userFeedString = userFeedString + '<div>Comment: ' + userFeedJSON.feed.data[i].comments.data[j].message + '</div>';
-                                        }
+                    // Create title
+                    var title = document.createElement('h3');
+                    title.innerHTML = "User Feed";
+                    userFeed.appendChild(title);
+
+                    // Build user feed
+                    var feed = document.createElement('ul');
+                    feed.className = "list-group";
+                    userFeed.appendChild(feed);
+
+                    if (userFeedJSON.feed) {
+                        for (let i in userFeedJSON.feed.data) {
+                            if (userFeedJSON.feed.data[i].message) {
+                                // Build a post
+                                var post = document.createElement('li');
+                                post.className = "list-group-item";
+                                feed.appendChild(post);
+
+                                // Message
+                                var message = document.createElement('div');
+                                message.innerHTML = 'Message: ' + userFeedJSON.feed.data[i].message;
+                                post.appendChild(message);
+
+                                // Link
+                                var link = document.createElement('div');
+                                link.innerHTML = '<a href="' + userFeedJSON.feed.data[i].permalink_url + '" target="_blank">Link to the post</a>';
+                                post.appendChild(link);
+
+                                // Comment
+                                for (let j in userFeedJSON.feed.data[i].comments.data) {
+                                    if (userFeedJSON.feed.data[i].comments.data[j].message) {
+                                        var comment = document.createElement('div');
+                                        comment.innerHTML = 'Comment: ' + userFeedJSON.feed.data[i].comments.data[j].message;
+                                        post.appendChild(comment);
                                     }
-                                    userFeedString = userFeedString + '</li>';
+                                }
                             }
                         }
                     }
-                    userFeedString = userFeedString + '</ul>';
-                    document.getElementById('userFeed').innerHTML = userFeedString;
+
+
+
+                    // var userFeedString = '<h3>User Feed</h3>'
+                    //     + '<ul class="list-group">';
+                    // if (userFeedJSON.feed) {
+                    //     for (var i in userFeedJSON.feed.data) {
+                    //         if (userFeedJSON.feed.data[i].message) {
+                    //             userFeedString = userFeedString + '<li class="list-group-item">'
+                    //                 + '<div>Message: ' + userFeedJSON.feed.data[i].message + '</div>'
+                    //                 + '<div><a href="' + userFeedJSON.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
+
+                    //                 for (var j in userFeedJSON.feed.data[i].comments.data) {
+                    //                     if (userFeedJSON.feed.data[i].comments.data[j].message) {
+                    //                         userFeedString = userFeedString + '<div>Comment: ' + userFeedJSON.feed.data[i].comments.data[j].message + '</div>';
+                    //                     }
+                    //                 }
+                    //                 userFeedString = userFeedString + '</li>';
+                    //         }
+                    //     }
+                    // }
+                    // userFeedString = userFeedString + '</ul>';
+                    // document.getElementById('userFeed').innerHTML = userFeedString;
                 }
                 else {
                     console.log(userFeedJSON);
