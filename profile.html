@@ -96,18 +96,61 @@
                     console.log('User Profile:');
                     console.log(userProfileJSON);
 
-                    var userProfileString = '<h3>User Profile</h3>'
-                        + '<ul>'
-                        + '<li>ID: ' + userProfileJSON.id + '</li>'
-                        + '<li>Name: ' + userProfileJSON.name + '</li>'
-                        + '<li>Gender: ' + userProfileJSON.gender + '</li>'
-                        + '<li>Birthday: ' + userProfileJSON.birthday + '</li>'
-                        + '<li>Hometown: ' + userProfileJSON.hometown.name + '</li>'
-                        + '<li>Email: ' + userProfileJSON.email + '</li>'
-                        + '<li><a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a></li>'
-                        + '</ul>';
+                    var userProfile = document.createElement('div');
+                    document.getElementById('userProfile').appendChild(userProfile);
 
-                    document.getElementById('userProfile').innerHTML = userProfileString;
+                    // Create title
+                    var title = document.createElement('h3');
+                    var titleText = document.createTextNode("User Profile");
+                    title.appendChild(titleText);
+                    userProfile.appendChild(title);
+
+                    // Build the user profile
+                    var data = document.createElement('ul');
+                    userProfile.appendChild(data);
+
+                    var id = document.createElement('li');
+                    id.innerHTML = userProfileJSON.id;
+                    data.appendChild(id);
+
+                    var name = document.createElement('li');
+                    name.innerHTML = userProfileJSON.name;
+                    data.appendChild(name);
+
+                    var gender = document.createElement('li');
+                    gender.innerHTML = userProfileJSON.gender;
+                    data.appendChild(gender);
+
+                    var birthday = document.createElement('li');
+                    birthday.innerHTML = userProfileJSON.birthday;
+                    data.appendChild(birthday);
+
+                    var hometown = document.createElement('li');
+                    hometown.innerHTML = userProfileJSON.hometown.name;
+                    data.appendChild(hometown);
+
+                    var email = document.createElement('li');
+                    email.innerHTML = userProfileJSON.email;
+                    data.appendChild(email);
+
+                    var id = document.createElement('li');
+                    id.innerHTML = '<a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a>';
+                    data.appendChild(id);
+
+
+
+                    // var userProfileString = '<h3>User Profile</h3>'
+                    //     + '<ul class="list-group">'
+                    //     + '<li class="list-group-item">ID: ' + userProfileJSON.id + '</li>'
+                    //     + '<li class="list-group-item">Name: ' + userProfileJSON.name + '</li>'
+                    //     + '<li class="list-group-item">Gender: ' + userProfileJSON.gender + '</li>'
+                    //     + '<li class="list-group-item">Birthday: ' + userProfileJSON.birthday + '</li>'
+                    //     + '<li class="list-group-item">Hometown: ' + userProfileJSON.hometown.name + '</li>'
+                    //     + '<li class="list-group-item">Email: ' + userProfileJSON.email + '</li>'
+                    //     + '<li class="list-group-item"><a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a></li>'
+                    //     + '</ul>';
+
+                    // document.getElementById('userProfile').innerHTML = userProfileString;
                 }
                 else {
                     console.log(userProfileJSON);
@@ -132,11 +175,11 @@
                     console.log(userFeedJSON);
 
                     var userFeedString = '<h3>User Feed</h3>'
-                        + '<ul>';
+                        + '<ul class="list-group">';
                     if (userFeedJSON.feed) {
                         for (var i in userFeedJSON.feed.data) {
                             if (userFeedJSON.feed.data[i].message) {
-                                userFeedString = userFeedString + '<li>'
+                                userFeedString = userFeedString + '<li class="list-group-item">'
                                     + '<div>Message: ' + userFeedJSON.feed.data[i].message + '</div>'
                                     + '<div><a href="' + userFeedJSON.feed.data[i].permalink_url + '" target="_blank">Link to the post</a></div>';
 
