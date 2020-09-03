@@ -127,11 +127,11 @@
 
                         if (pageFeedJSON.feed) {
                             pageFeedString = pageFeedString + '<h3>' + pageFeedJSON.name + '</h3>'
-                                + '<ul class="list-group">';
+                                + '<ul>';
                             for (var j in pageFeedJSON.feed.data) {
                                 // Build a page post
                                 if (pageFeedJSON.feed.data[j].message) {
-                                    pageFeedString = pageFeedString + '<li class="list-group-item">'
+                                    pageFeedString = pageFeedString + '<li>'
                                         + '<div>Message: ' + pageFeedJSON.feed.data[j].message + '</div>'
                                         + '<div><a href="' + pageFeedJSON.feed.data[j].permalink_url
                                         + '" target="_blank">Link to the post</a></div>';
