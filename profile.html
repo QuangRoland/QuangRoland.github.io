@@ -106,36 +106,44 @@
                     userProfile.appendChild(title);
 
                     // Build the user profile
-                    var data = document.createElement('ul class="list-group"');
+                    var data = document.createElement('ul');
+                    data.className = "list-group";
                     userProfile.appendChild(data);
 
-                    var id = document.createElement('li class="list-group-item"');
+                    var id = document.createElement('li');
+                    id.className = "list-group-item";
                     id.innerHTML = 'ID: ' + userProfileJSON.id;
                     data.appendChild(id);
 
-                    var name = document.createElement('li class="list-group-item"');
+                    var name = document.createElement('li');
+                    name.className = "list-group-item";
                     name.innerHTML = 'Name: ' + userProfileJSON.name;
                     data.appendChild(name);
 
-                    var gender = document.createElement('li class="list-group-item"');
+                    var gender = document.createElement('li');
+                    gender.className = "list-group-item";
                     gender.innerHTML = 'Gender: ' + userProfileJSON.gender;
                     data.appendChild(gender);
 
-                    var birthday = document.createElement('li class="list-group-item"');
+                    var birthday = document.createElement('li');
+                    birthday.className = "list-group-item";
                     birthday.innerHTML = 'Birthday: ' + userProfileJSON.birthday;
                     data.appendChild(birthday);
 
-                    var hometown = document.createElement('li class="list-group-item"');
+                    var hometown = document.createElement('li');
+                    hometown.className = "list-group-item";
                     hometown.innerHTML = 'Hometown: ' + userProfileJSON.hometown.name;
                     data.appendChild(hometown);
 
-                    var email = document.createElement('li class="list-group-item"');
+                    var email = document.createElement('li');
+                    email.className = "list-group-item";
                     email.innerHTML = 'Email: ' + userProfileJSON.email;
                     data.appendChild(email);
 
-                    var id = document.createElement('li class="list-group-item"');
-                    id.innerHTML = '<a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a>';
-                    data.appendChild(id);
+                    var link = document.createElement('li');
+                    link.className = "list-group-item";
+                    link.innerHTML = '<a href="' + userProfileJSON.link + '" target="_blank">Link to profile page</a>';
+                    data.appendChild(link);
 
 
 
