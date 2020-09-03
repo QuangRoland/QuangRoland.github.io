@@ -99,20 +99,20 @@
                     var userProfile = document.createElement('div');
                     document.getElementById('userProfile').appendChild(userProfile);
 
-                    // Create title
+                    // Title
                     var title = document.createElement('h3');
                     title.innerHTML = "User Profile";
                     userProfile.appendChild(title);
 
-                    // Build user profile
+                    // Build profile
                     var profile = document.createElement('ul');
                     profile.className = "list-group";
                     userProfile.appendChild(profile);
 
-                    // ID
+                    // Id
                     var id = document.createElement('li');
                     id.className = "list-group-item";
-                    id.innerHTML = 'ID: ' + userProfileJSON.id;
+                    id.innerHTML = 'Id: ' + userProfileJSON.id;
                     profile.appendChild(id);
 
                     // Name
@@ -176,12 +176,12 @@
                     var userFeed = document.createElement('div');
                     document.getElementById('userFeed').appendChild(userFeed);
 
-                    // Create title
+                    // Title
                     var title = document.createElement('h3');
                     title.innerHTML = "User Feed";
                     userFeed.appendChild(title);
 
-                    // Build user feed
+                    // Build feed
                     var feed = document.createElement('ul');
                     feed.className = "list-group";
                     userFeed.appendChild(feed);
@@ -189,7 +189,7 @@
                     if (userFeedJSON.feed) {
                         for (let i in userFeedJSON.feed.data) {
                             if (userFeedJSON.feed.data[i].message) {
-                                // Build user post
+                                // Build post
                                 var post = document.createElement('li');
                                 post.className = "list-group-item";
                                 feed.appendChild(post);

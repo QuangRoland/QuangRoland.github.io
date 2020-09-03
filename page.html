@@ -115,11 +115,10 @@
                     console.log(pageListJSON);
                 }
 
-                // Build the page feed
                 var pageFeed = document.createElement('div');
                 document.getElementById('pageFeed').appendChild(pageFeed);
 
-                // Create title
+                // Title
                 var title = document.createElement('h3');
                 title.innerHTML = "Page Feed";
                 pageFeed.appendChild(title);
@@ -133,19 +132,19 @@
                         console.log(pageFeedJSON);
 
                         if (pageFeedJSON.feed) {
-                            // Page name
-                            var pageName = document.createElement('h3');
-                            pageName.innerHTML = pageFeedJSON.name;
-                            pageFeed.appendChild(pageName);
+                            // Name
+                            var name = document.createElement('h3');
+                            name.innerHTML = pageFeedJSON.name;
+                            pageFeed.appendChild(name);
 
-                            // Build page feed
+                            // Build feed
                             var feed = document.createElement('ul');
                             feed.className = "list-group";
                             pageFeed.appendChild(feed);
 
                             for (let j in pageFeedJSON.feed.data) {
                                 if (pageFeedJSON.feed.data[j].message) {
-                                    // Build page post
+                                    // Build post
                                     var post = document.createElement('li');
                                     post.className = "list-group-item";
                                     feed.appendChild(post);
@@ -171,52 +170,22 @@
                                         }
                                     }
 
+                                    // Get the total like count of a post
+                                    var pagePostLikeJSON = await getPagePostLikeFromAPI(pageFeedJSON.feed.data[j].id);
 
+                                    if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
+                                        var like = document.createElement('div');
+                                        like.innerHTML = 'Total Like Count: ' + pagePostLikeJSON.likes.summary.total_count;
+                                        post.appendChild(like);
+                                    }
                                 }
                             }
-
-
-
-
-
-
-
-                            // pageFeedString = pageFeedString + '<h3>' + pageFeedJSON.name + '</h3>'
-                            //     + '<ul class="list-group">';
-                            // for (var j in pageFeedJSON.feed.data) {
-                            //     // Build a page post
-                            //     if (pageFeedJSON.feed.data[j].message) {
-                            //         pageFeedString = pageFeedString + '<li class="list-group-item">'
-                            //             + '<div>Message: ' + pageFeedJSON.feed.data[j].message + '</div>'
-                            //             + '<div><a href="' + pageFeedJSON.feed.data[j].permalink_url
-                            //             + '" target="_blank">Link to the post</a></div>';
-
-                            //         // Get the total like count of a post
-                            //         var pagePostLikeJSON = await getPagePostLikeFromAPI(pageFeedJSON.feed.data[j].id);
-
-                            //         if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
-                            //             pageFeedString = pageFeedString + '<div>Total Like Count: ' + pagePostLikeJSON.likes.summary.total_count + '</div>';
-                            //         }
-
-                            //         // Build the comments in a post
-                            //         if (pageFeedJSON.feed.data[j].comments) {
-                            //             for (var k in pageFeedJSON.feed.data[j].comments.data) {
-                            //                 if (pageFeedJSON.feed.data[j].comments.data[k].message) {
-                            //                     pageFeedString = pageFeedString + '<div>Comment: ' + pageFeedJSON.feed.data[j].comments.data[k].message + '</div>';
-                            //                 }
-                            //             }
-                            //         }
-                            //         pageFeedString = pageFeedString + '</li>';
-                            //     }
-                            // }
-                            // pageFeedString = pageFeedString + '</ul>';
                         }
                     }
                     else {
                         console.log(pageFeedJSON);
                     }
                 }
-                document.getElementById('pageFeed').innerHTML = pageFeedString;
             }
 
             // Get page list from API
