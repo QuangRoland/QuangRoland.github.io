@@ -186,6 +186,13 @@
                         var postToPageMessage = document.createElement("input");
                         postToPageMessage.setAttribute("type", "text");
                         pageFeed.appendChild(postToPageMessage);
+
+                        var postToPageButton = document.createElement("button");
+                        postToPageButton.innerHTML = "Post to Page";
+                        postToPageButton.onclick = function(){
+                            console.log(postToPageMessage.value + i);
+                        };
+                        pageFeed.appendChild(postToPageButton);
                     }
                     else {
                         console.log(pageFeedJSON);
