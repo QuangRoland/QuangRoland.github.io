@@ -113,7 +113,7 @@
                 document.getElementById('pageFeed').appendChild(pageFeed);
 
                 // Title
-                var title = document.createElement('h3');
+                var title = document.createElement('h1');
                 title.innerHTML = "Page Feed";
                 pageFeed.appendChild(title);
 
@@ -127,7 +127,7 @@
 
                         if (pageFeedJSON.feed) {
                             // Name
-                            var name = document.createElement('h3');
+                            var name = document.createElement('h1');
                             name.innerHTML = pageFeedJSON.name + " Feed";
                             pageFeed.appendChild(name);
 
@@ -178,7 +178,7 @@
                             // Post to page
 
                             // Post to page title
-                            var postToPageTitle = document.createElement('h2');
+                            var postToPageTitle = document.createElement('h4');
                             postToPageTitle.innerHTML = "Post to " + pageFeedJSON.name;
                             pageFeed.appendChild(postToPageTitle);
 
