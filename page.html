@@ -180,7 +180,7 @@
                                     var likePagePostButton = document.createElement("button");
                                     likePagePostButton.innerHTML = "Like Post";
                                     likePagePostButton.onclick = async function(){
-                                        var likePagePostJSON = await likePagePostThroughAPI(pageFeedJSON.feed.data[j].id);
+                                        var likePagePostJSON = await likePagePostThroughAPI(pageFeedJSON.feed.data[j].id, pageTokenList[i]);
 
                                         if(likePagePostJSON && !likePagePostJSON.error) {
                                             console.log('Successfully Like');
@@ -262,9 +262,9 @@
             }
 
             // Like page post through API
-            function likePagePostThroughAPI(pagePostId) {
+            function likePagePostThroughAPI(pagePostId, pageToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/' + pagePostId + '/likes', 'post', function(response) {
+                    FB.api('/' + pagePostId + '/likes', 'post', { access_token:pageToken }, function(response) {
                         resolve(response);
                     });
                 });
