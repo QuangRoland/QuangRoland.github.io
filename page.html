@@ -71,16 +71,10 @@
                 if (isLoggedIn) {
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
                     document.getElementById('pageFeed').setAttribute('style', 'display:block');
-                    document.getElementById('postToPageHeading').setAttribute('style', 'display:block');
-                    document.getElementById('postToPageMessage').setAttribute('style', 'display:block');
-                    document.getElementById('postToPageButton').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
                     document.getElementById('pageFeed').setAttribute('style', 'display:none');
-                    document.getElementById('postToPageHeading').setAttribute('style', 'display:none');
-                    document.getElementById('postToPageMessage').setAttribute('style', 'display:none');
-                    document.getElementById('postToPageButton').setAttribute('style', 'display:none');
                 }
             }
 
@@ -180,27 +174,41 @@
                                     }
                                 }
                             }
+
+                            // Post to page
+
+                            // Post to page title
+                            var postToPageTitle = document.createElement('h3');
+                            postToPageTitle.innerHTML = "Post to " + pageFeedJSON.name;
+                            pageFeed.appendChild(postToPageTitle);
+
+                            // Post to page message
+                            var postToPageMessageDiv = document.createElement('div');
+                            pageFeed.appendChild(postToPageMessageDiv);
+
+                            var postToPageMessage = document.createElement("input");
+                            postToPageMessage.setAttribute("type", "text");
+                            postToPageMessage.setAttribute("id", "postToPageMessage" + i);
+                            postToPageMessageDiv.appendChild(postToPageMessage);
+
+                            // Post to page button
+                            var postToPageButtonDiv = document.createElement('div');
+                            pageFeed.appendChild(postToPageButtonDiv);
+
+                            var postToPageButton = document.createElement("button");
+                            postToPageButton.innerHTML = "Post to Page";
+                            postToPageButton.onclick = async function(){
+                                var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage' + i).value, pageIdList[i], pageTokenList[i]);
+
+                                if(postToPageJSON && !postToPageJSON.error) {
+                                    console.log('Successfully Post');
+                                }
+                                else {
+                                    console.log(postToPageJSON);
+                                }
+                            };
+                            postToPageButtonDiv.appendChild(postToPageButton);
                         }
-
-                        // Post to page
-                        var postToPageMessage = document.createElement("input");
-                        postToPageMessage.setAttribute("type", "text");
-                        postToPageMessage.setAttribute("id", "postToPageMessage" + i);
-                        pageFeed.appendChild(postToPageMessage);
-
-                        var postToPageButton = document.createElement("button");
-                        postToPageButton.innerHTML = "Post to Page";
-                        postToPageButton.onclick = async function(){
-                            var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage' + i).value, pageIdList[i], pageTokenList[i]);
-
-                            if(postToPageJSON && !postToPageJSON.error) {
-                                console.log('Successfully Post');
-                            }
-                            else {
-                                console.log(postToPageJSON);
-                            }
-                        };
-                        pageFeed.appendChild(postToPageButton);
                     }
                     else {
                         console.log(pageFeedJSON);
@@ -269,11 +277,6 @@
         <div class="container">
             <!-- Page Feed -->
             <div id="pageFeed"></div>
-
-            <!-- Post to Page -->
-            <h3 id="postToPageHeading" style="display:none">Post to Page</h3>
-            <input type="text" id="postToPageMessage" style="display:none"></input>
-            <button id="postToPageButton" onclick="postToPage()" style="display:none">Post to Page</button>
         </div>
     </body>
 </html>
