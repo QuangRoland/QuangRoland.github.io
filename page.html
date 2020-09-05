@@ -185,12 +185,13 @@
                         // Post to page
                         var postToPageMessage = document.createElement("input");
                         postToPageMessage.setAttribute("type", "text");
+                        postToPageMessage.setAttribute("id", "input" + i);
                         pageFeed.appendChild(postToPageMessage);
 
                         var postToPageButton = document.createElement("button");
                         postToPageButton.innerHTML = "Post to Page";
                         postToPageButton.onclick = function(){
-                            console.log(postToPageMessage.value + i);
+                            console.log(document.getElementById('input' + i).value + i);
                         };
                         pageFeed.appendChild(postToPageButton);
                     }
