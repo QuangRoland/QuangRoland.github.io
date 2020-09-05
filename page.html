@@ -180,6 +180,9 @@
                                     var likePagePostButton = document.createElement("button");
                                     likePagePostButton.innerHTML = "Like Post";
                                     likePagePostButton.onclick = async function(){
+                                        console.log("j = " + j);
+                                        console.log("i = " + i);
+
                                         var likePagePostJSON = await likePagePostThroughAPI(pageFeedJSON.feed.data[j].id, pageTokenList[i]);
 
                                         if(likePagePostJSON && !likePagePostJSON.error) {
