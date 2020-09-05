@@ -194,41 +194,40 @@
                                     likePagePostButtonDiv.appendChild(likePagePostButton);
                                 }
                             }
-
-                            // Post to page
-
-                            // Post to page title
-                            var postToPageTitle = document.createElement('h4');
-                            postToPageTitle.innerHTML = "Post to " + pageJSONList[i].name;
-                            pageFeed.appendChild(postToPageTitle);
-
-                            // Post to page message
-                            var postToPageMessageDiv = document.createElement('div');
-                            pageFeed.appendChild(postToPageMessageDiv);
-
-                            var postToPageMessage = document.createElement("input");
-                            postToPageMessage.setAttribute("type", "text");
-                            postToPageMessage.setAttribute("id", "postToPageMessage" + i);
-                            postToPageMessageDiv.appendChild(postToPageMessage);
-
-                            // Post to page button
-                            var postToPageButtonDiv = document.createElement('div');
-                            pageFeed.appendChild(postToPageButtonDiv);
-
-                            var postToPageButton = document.createElement("button");
-                            postToPageButton.innerHTML = "Post to Page";
-                            postToPageButton.onclick = async function(){
-                                var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage' + i).value, pageIdList[i], pageTokenList[i]);
-
-                                if(postToPageJSON && !postToPageJSON.error) {
-                                    console.log('Successfully Post');
-                                }
-                                else {
-                                    console.log(postToPageJSON);
-                                }
-                            };
-                            postToPageButtonDiv.appendChild(postToPageButton);
                         }
+
+                        // Post to page
+                        // Post to page title
+                        var postToPageTitle = document.createElement('h4');
+                        postToPageTitle.innerHTML = "Post to " + pageJSONList[i].name;
+                        pageFeed.appendChild(postToPageTitle);
+
+                        // Post to page message
+                        var postToPageMessageDiv = document.createElement('div');
+                        pageFeed.appendChild(postToPageMessageDiv);
+
+                        var postToPageMessage = document.createElement("input");
+                        postToPageMessage.setAttribute("type", "text");
+                        postToPageMessage.setAttribute("id", "postToPageMessage" + i);
+                        postToPageMessageDiv.appendChild(postToPageMessage);
+
+                        // Post to page button
+                        var postToPageButtonDiv = document.createElement('div');
+                        pageFeed.appendChild(postToPageButtonDiv);
+
+                        var postToPageButton = document.createElement("button");
+                        postToPageButton.innerHTML = "Post to Page";
+                        postToPageButton.onclick = async function(){
+                            var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage' + i).value, pageIdList[i], pageTokenList[i]);
+
+                            if(postToPageJSON && !postToPageJSON.error) {
+                                console.log('Successfully Post');
+                            }
+                            else {
+                                console.log(postToPageJSON);
+                            }
+                        };
+                        postToPageButtonDiv.appendChild(postToPageButton);
                     }
                     else {
                         console.log(pageJSONList[i]);
