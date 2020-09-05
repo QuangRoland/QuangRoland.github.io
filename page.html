@@ -185,13 +185,20 @@
                         // Post to page
                         var postToPageMessage = document.createElement("input");
                         postToPageMessage.setAttribute("type", "text");
-                        postToPageMessage.setAttribute("id", "input" + i);
+                        postToPageMessage.setAttribute("id", "postToPageMessage" + i);
                         pageFeed.appendChild(postToPageMessage);
 
                         var postToPageButton = document.createElement("button");
                         postToPageButton.innerHTML = "Post to Page";
                         postToPageButton.onclick = function(){
-                            console.log(document.getElementById('input' + i).value + i);
+                            var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage' + i).value, pageIdList[i], pageTokenList[i]);
+                            
+                            if(postToPageJSON && !postToPageJSON.error) {
+                                console.log('Successfully Post');
+                            }
+                            else {
+                                console.log(postToPageJSON);
+                            }
                         };
                         pageFeed.appendChild(postToPageButton);
                     }
@@ -228,19 +235,13 @@
                 });
             }
 
-            // Post to page
-            function postToPage() {
-                var message = document.getElementById('postToPageMessage').value;
-                for (let i in pageIdList) {
-                    FB.api('/' + pageIdList[i] + '/feed', 'post', { message:message, access_token:pageTokenList[i] }, function (response) {
-                        if(response && !response.error) {
-                            console.log('Successfully Post');
-                        }
-                        else {
-                            console.log(response);
-                        }
+            // Post to page through API
+            function postToPageThroughAPI(message, pageId, pageToken) {
+                return new Promise((resolve, reject) => {
+                    FB.api('/' + pageId + '/feed', 'post', { message:message, access_token:pageToken }, function (response) {
+                        resolve(response);
                     });
-                }
+                });
             }
 
 
