@@ -181,6 +181,11 @@
                                 }
                             }
                         }
+
+                        // Post to page
+                        var postToPageMessage = document.createElement("input");
+                        postToPageMessage.setAttribute("type", "text");
+                        pageFeed.appendChild(postToPageMessage);
                     }
                     else {
                         console.log(pageFeedJSON);
