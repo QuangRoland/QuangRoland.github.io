@@ -128,7 +128,7 @@
                         if (pageFeedJSON.feed) {
                             // Name
                             var name = document.createElement('h3');
-                            name.innerHTML = pageFeedJSON.name;
+                            name.innerHTML = pageFeedJSON.name + " Feed";
                             pageFeed.appendChild(name);
 
                             // Build feed
@@ -178,7 +178,7 @@
                             // Post to page
 
                             // Post to page title
-                            var postToPageTitle = document.createElement('h3');
+                            var postToPageTitle = document.createElement('h2');
                             postToPageTitle.innerHTML = "Post to " + pageFeedJSON.name;
                             pageFeed.appendChild(postToPageTitle);
 
