@@ -88,6 +88,7 @@
             // Page list
             var pageIdList = [];
             var pageTokenList = [];
+            var pageJSONList = [];
 
             // Display page feed
             async function displayPageFeed() {
@@ -119,16 +120,17 @@
 
                 for (let i in pageIdList) {
                     // Get the feed of a page in the list
-                    var pageFeedJSON = await getPageFeedFromAPI(pageIdList[i]);
+                    var response = await getPageFeedFromAPI(pageIdList[i]);
+                    pageJSONList.push(response);
 
-                    if(pageFeedJSON && !pageFeedJSON.error) {
-                        console.log(pageFeedJSON.name + ' Feed:');
-                        console.log(pageFeedJSON);
+                    if(pageJSONList[i] && !pageJSONList[i].error) {
+                        console.log(pageJSONList[i].name + ' Feed:');
+                        console.log(pageJSONList[i]);
 
-                        if (pageFeedJSON.feed) {
+                        if (pageJSONList[i].feed) {
                             // Name
                             var name = document.createElement('h1');
-                            name.innerHTML = pageFeedJSON.name + " Feed";
+                            name.innerHTML = pageJSONList[i].name + " Feed";
                             pageFeed.appendChild(name);
 
                             // Build feed
@@ -136,8 +138,8 @@
                             feed.className = "list-group";
                             pageFeed.appendChild(feed);
 
-                            for (let j in pageFeedJSON.feed.data) {
-                                if (pageFeedJSON.feed.data[j].message) {
+                            for (let j in pageJSONList[i].feed.data) {
+                                if (pageJSONList[i].feed.data[j].message) {
                                     // Build post
                                     var post = document.createElement('li');
                                     post.className = "list-group-item";
@@ -145,27 +147,27 @@
 
                                     // Message
                                     var message = document.createElement('div');
-                                    message.innerHTML = 'Message: ' + pageFeedJSON.feed.data[j].message;
+                                    message.innerHTML = 'Message: ' + pageJSONList[i].feed.data[j].message;
                                     post.appendChild(message);
 
                                     // Link
                                     var link = document.createElement('div');
-                                    link.innerHTML = '<a href="' + pageFeedJSON.feed.data[j].permalink_url + '" target="_blank">Link to the post</a>';
+                                    link.innerHTML = '<a href="' + pageJSONList[i].feed.data[j].permalink_url + '" target="_blank">Link to the post</a>';
                                     post.appendChild(link);
 
                                     // Comment
-                                    if (pageFeedJSON.feed.data[j].comments) {
-                                        for (let k in pageFeedJSON.feed.data[j].comments.data) {
-                                            if (pageFeedJSON.feed.data[j].comments.data[k].message) {
+                                    if (pageJSONList[i].feed.data[j].comments) {
+                                        for (let k in pageJSONList[i].feed.data[j].comments.data) {
+                                            if (pageJSONList[i].feed.data[j].comments.data[k].message) {
                                                 var comment = document.createElement('div');
-                                                comment.innerHTML = 'Comment: ' + pageFeedJSON.feed.data[j].comments.data[k].message;
+                                                comment.innerHTML = 'Comment: ' + pageJSONList[i].feed.data[j].comments.data[k].message;
                                                 post.appendChild(comment);
                                             }
                                         }
                                     }
 
                                     // Get total like count of the post
-                                    var pagePostLikeJSON = await getPagePostLikeFromAPI(pageFeedJSON.feed.data[j].id);
+                                    var pagePostLikeJSON = await getPagePostLikeFromAPI(pageJSONList[i].feed.data[j].id);
 
                                     if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
                                         var like = document.createElement('div');
@@ -179,13 +181,8 @@
 
                                     var likePagePostButton = document.createElement("button");
                                     likePagePostButton.innerHTML = "Like Post";
-                                    console.log("i = " + i);
-                                    console.log("j = " + j);
                                     likePagePostButton.onclick = async function(){
-                                        console.log("i = " + i);
-                                        console.log("j = " + j);
-
-                                        var likePagePostJSON = await likePagePostThroughAPI(pageFeedJSON.feed.data[j].id, pageTokenList[i]);
+                                        var likePagePostJSON = await likePagePostThroughAPI(pageJSONList[i].feed.data[j].id, pageTokenList[i]);
 
                                         if(likePagePostJSON && !likePagePostJSON.error) {
                                             console.log('Successfully Like');
@@ -202,7 +199,7 @@
 
                             // Post to page title
                             var postToPageTitle = document.createElement('h4');
-                            postToPageTitle.innerHTML = "Post to " + pageFeedJSON.name;
+                            postToPageTitle.innerHTML = "Post to " + pageJSONList[i].name;
                             pageFeed.appendChild(postToPageTitle);
 
                             // Post to page message
@@ -234,7 +231,7 @@
                         }
                     }
                     else {
-                        console.log(pageFeedJSON);
+                        console.log(pageJSONList[i]);
                     }
                 }
             }
