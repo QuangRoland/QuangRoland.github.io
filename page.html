@@ -190,9 +190,9 @@
 
                         var postToPageButton = document.createElement("button");
                         postToPageButton.innerHTML = "Post to Page";
-                        postToPageButton.onclick = function(){
+                        postToPageButton.onclick = async function(){
                             var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage' + i).value, pageIdList[i], pageTokenList[i]);
-                            
+
                             if(postToPageJSON && !postToPageJSON.error) {
                                 console.log('Successfully Post');
                             }
