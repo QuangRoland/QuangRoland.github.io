@@ -82,15 +82,20 @@
                 }
             }
 
-            // Custom login
+            // Login
+            async function login() {
+                var loginJSON = await loginThroughFacebook();
+                statusChangeCallback(loginJSON);
+            }
+
             // Login through Facebook
-            // function loginThroughFacebook() {
-            //     return new Promise((resolve, reject) => {
-            //         FB.login(function(response) {
-            //             resolve(response);
-            //         }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content'});
-            //     });
-            // }
+            function loginThroughFacebook() {
+                return new Promise((resolve, reject) => {
+                    FB.login(function(response) {
+                        resolve(response);
+                    }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content'});
+                });
+            }
 
             // Logout
             async function logout() {
@@ -127,18 +132,18 @@
             
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
-                    <!-- Default Login Button -->
-                    <div class="fb-login-button"
+                    <!-- Facebook Default Login Button -->
+                    <!-- <div class="fb-login-button"
                         id="loginButton"
                         scope="public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content"
                         onlogin="checkLoginState()">
-                    </div>
+                    </div> -->
 
-                    <!-- Custom Login Button -->
-                    <!-- <button id="loginButton" onclick="" style="display:none">Login</button> -->
+                    <!-- Login Button -->
+                    <button id="loginButton" onclick="login();" style="display:none">Login</button>
                     
                     <!-- Logout Button -->
-                    <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
+                    <button id="logoutButton" onclick="logout();" style="display:none">Logout</button>
                 </ul>
             </div>
         </nav>
