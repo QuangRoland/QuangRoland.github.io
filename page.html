@@ -108,7 +108,14 @@
             // Get long-lived page token
             async function getLongLivedPageToken() {
                 var loginStateJSON = await checkLoginState();
-                console.log(loginStateJSON);
+
+                if (loginStateJSON.status === "connected") {
+                    var longLivedUserTokenJSON = await getLongLivedUserToken(loginStateJSON.authResponse.accessToken);
+                    console.log(longLivedUserTokenJSON);
+                }
+                else {
+                    console.log(loginStateJSON);
+                }
             }
 
             // Display page feed
