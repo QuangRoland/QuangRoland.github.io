@@ -157,6 +157,7 @@
                     // Get the feed of a page in the list
                     var response = await getPageFeedFromAPI(pageIdList[i]);
                     pageJSONList.push(response);
+                    console.log(response);
 
                     if(pageJSONList[i] && !pageJSONList[i].error) {
                         console.log(pageJSONList[i].name + ' Feed:');
