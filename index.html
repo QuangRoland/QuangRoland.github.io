@@ -48,7 +48,7 @@
             // Check login state
             function checkLoginState() {
                 FB.getLoginStatus(function(response) {
-                    console.log("Check login state:");
+                    console.log("Check login:");
                     console.log(response);
 
                     statusChangeCallback(response);
@@ -93,6 +93,8 @@
 
                     console.log("Long lived:");
                     console.log(longLivedJSON);
+
+                    checkLoginState();
                 }
             }
 
