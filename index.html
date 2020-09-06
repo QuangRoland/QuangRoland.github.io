@@ -48,7 +48,9 @@
             // Check login state
             function checkLoginState() {
                 FB.getLoginStatus(function(response) {
-                    console.log("Check login: " + response);
+                    console.log("Check login:");
+                    console.log(response);
+
                     statusChangeCallback(response);
                 });
             }
@@ -83,7 +85,9 @@
             // Old Login
             function login() {
                 FB.login(function(response) {
-                    console.log("Login response: " + response);
+                    console.log("Login response:");
+                    console.log(response);
+
                     checkLoginState();
                 }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content'});
             }
