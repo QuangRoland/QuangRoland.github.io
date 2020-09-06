@@ -239,7 +239,6 @@
             function getPageListFromAPI() {
                 return new Promise((resolve, reject) => {
                     FB.api('/me?fields=accounts', function(response) {
-                        console.log(response);
                         resolve(response);
                     });
                 });
@@ -275,7 +274,7 @@
             // Post to page through API
             function postToPageThroughAPI(message, pageId, pageToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/' + pageId + '/feed', 'post', { message:message, access_token:pageToken }, function (response) {
+                    FB.api('/' + pageId + '/feed', 'post', { message:message, access_token:pageToken }, function(response) {
                         resolve(response);
                     });
                 });
