@@ -111,7 +111,24 @@
 
                 if (loginStateJSON.status === "connected") {
                     var longLivedUserTokenJSON = await getLongLivedUserToken(loginStateJSON.authResponse.accessToken);
-                    console.log(longLivedUserTokenJSON);
+                    
+                    // Get the list of pages that the user admins
+                    var pageListJSON = await getPageListFromAPI(longLivedUserTokenJSON.access_token);
+
+                    if(pageListJSON && !pageListJSON.error) {
+                        console.log('Page List:');
+                        console.log(pageListJSON);
+
+                        if (pageListJSON.accounts) {
+                            for (var i in pageListJSON.accounts.data) {
+                                pageIdList.push(pageListJSON.accounts.data[i].id);
+                                pageTokenList.push(pageListJSON.accounts.data[i].access_token);
+                            }
+                        }
+                    }
+                    else {
+                        console.log(pageListJSON);
+                    }
                 }
                 else {
                     console.log(loginStateJSON);
@@ -121,24 +138,6 @@
             // Display page feed
             async function displayPageFeed() {
                 document.getElementById('displayPageFeedButton').setAttribute('style', 'display:none');
-
-                // Get the list of pages that the user admins
-                var pageListJSON = await getPageListFromAPI();
-
-                if(pageListJSON && !pageListJSON.error) {
-                    console.log('Page List:');
-                    console.log(pageListJSON);
-
-                    if (pageListJSON.accounts) {
-                        for (var i in pageListJSON.accounts.data) {
-                            pageIdList.push(pageListJSON.accounts.data[i].id);
-                            pageTokenList.push(pageListJSON.accounts.data[i].access_token);
-                        }
-                    }
-                }
-                else {
-                    console.log(pageListJSON);
-                }
 
                 var pageFeed = document.createElement('div');
                 document.getElementById('pageFeed').appendChild(pageFeed);
