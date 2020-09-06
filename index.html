@@ -48,7 +48,7 @@
             // Check login state
             function checkLoginState() {
                 FB.getLoginStatus(function(response) {
-                    console.log(response);
+                    console.log("Check login: " + response);
                     statusChangeCallback(response);
                 });
             }
@@ -81,17 +81,23 @@
             }
 
             // Old Login
-            // function login() {
-            //     FB.login(function(response) {
-            //         checkLoginState();
-            //     }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts'});
-            // }
+            function login() {
+                FB.login(function(response) {
+                    console.log("Login response: " + response);
+                    checkLoginState();
+                }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content'});
+            }
 
             // Logout
             function logout() {
                 FB.logout(function(response) {
                     checkLoginState();
                 });
+            }
+
+            // Get long-lived user access token
+            function getLongLivedUserAccessToken() {
+
             }
 
             // Show welcome message
@@ -113,15 +119,15 @@
             
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
-                    <!-- Login Button -->
-                    <div class="fb-login-button"
+                    <!-- New Login Button -->
+                    <!-- <div class="fb-login-button"
                         id="loginButton"
                         scope="public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content"
                         onlogin="checkLoginState()">
-                    </div>
+                    </div> -->
 
                     <!-- Old Login Button -->
-                    <!-- <button id="loginButton" onclick="login()" style="display:none">Login</button> -->
+                    <button id="loginButton" onclick="login()" style="display:none">Login</button>
                     
                     <!-- Logout Button -->
                     <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
