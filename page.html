@@ -113,8 +113,8 @@
                     var longLivedUserTokenJSON = await getLongLivedUserToken(loginStateJSON.authResponse.accessToken);
                     
                     // Get the list of pages that the user admins
-                    var pageListJSON = await getPageListFromAPI(longLivedUserTokenJSON.access_token);
-
+                    var pageListJSON = await getPageListFromAPI();
+                    //longLivedUserTokenJSON.access_token
                     if(pageListJSON && !pageListJSON.error) {
                         console.log('Page List:');
                         console.log(pageListJSON);
