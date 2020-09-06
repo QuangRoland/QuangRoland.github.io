@@ -25,7 +25,7 @@
             crossorigin="anonymous"></script>
 
         <script>
-            window.fbAsyncInit = function() {
+            window.fbAsyncInit = async function() {
                 FB.init({
                     appId      : '1650600928436459',
                     cookie     : true,
@@ -33,7 +33,8 @@
                     version    : 'v8.0'
                 });
 
-                checkLoginState();
+                var loginStateJSON = await checkLoginState();
+                statusChangeCallback(loginStateJSON);
             };
 
             // Javascript SDK for Facebook API
@@ -47,11 +48,10 @@
 
             // Check login state
             function checkLoginState() {
-                FB.getLoginStatus(function(response) {
-                    console.log("Check login:");
-                    console.log(response);
-
-                    statusChangeCallback(response);
+                return new Promise((resolve, reject) => {
+                    FB.getLoginStatus(function(response) {
+                        resolve(response);
+                    });
                 });
             }
 
@@ -82,48 +82,31 @@
                 }
             }
 
-            // Login
-            async function login() {
-                var shortLivedJSON = await loginThroughFacebook();
-                console.log("Short lived:");
-                console.log(shortLivedJSON);
-
-                if (shortLivedJSON.status === "connected") {
-                    var longLivedJSON = await getLongLivedAccessToken(shortLivedJSON.authResponse.accessToken);
-
-                    console.log("Long lived:");
-                    console.log(longLivedJSON);
-
-                    checkLoginState();
-                }
-            }
-
+            // Custom login
             // Login through Facebook
-            function loginThroughFacebook() {
-                return new Promise((resolve, reject) => {
-                    FB.login(function(response) {
-                        resolve(response);
-                    }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content'});
-                });
+            // function loginThroughFacebook() {
+            //     return new Promise((resolve, reject) => {
+            //         FB.login(function(response) {
+            //             resolve(response);
+            //         }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content'});
+            //     });
+            // }
+
+            // Logout
+            async function logout() {
+                var logoutJSON = await logoutThroughFacebook();
+                var loginStateJSON = await checkLoginState();
+                statusChangeCallback(loginStateJSON);
             }
 
-            // Get long-lived access token
-            function getLongLivedAccessToken(shortLivedAccessToken) {
+            // Logout through Facebook
+            function logoutThroughFacebook() {
                 return new Promise((resolve, reject) => {
-                    FB.api('/oauth/access_token', 'get', { "grant_type":"fb_exchange_token","client_id":"1650600928436459","client_secret":"f8d40718a62d9f808819656d37e5dd8f","fb_exchange_token":shortLivedAccessToken }, function(response) {
+                    FB.logout(function(response) {
                         resolve(response);
                     });
                 });
             }
-
-            // Logout
-            function logout() {
-                FB.logout(function(response) {
-                    checkLoginState();
-                });
-            }
-
-
 
             // Show welcome message
             function showWelcome() {
@@ -144,15 +127,15 @@
             
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto"> <!-- ml-auto: stick to the right -->
-                    <!-- New Login Button -->
-                    <!-- <div class="fb-login-button"
+                    <!-- Default Login Button -->
+                    <div class="fb-login-button"
                         id="loginButton"
                         scope="public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content"
                         onlogin="checkLoginState()">
-                    </div> -->
+                    </div>
 
-                    <!-- Login Button -->
-                    <button id="loginButton" onclick="login()" style="display:none">Login</button>
+                    <!-- Custom Login Button -->
+                    <!-- <button id="loginButton" onclick="" style="display:none">Login</button> -->
                     
                     <!-- Logout Button -->
                     <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
