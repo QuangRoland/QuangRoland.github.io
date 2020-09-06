@@ -60,7 +60,6 @@
                 if (response.status === 'connected') {
                     console.log('Logged in');
                     displayElements(true);
-                    displayPageFeed();
                 }
                 else {
                     console.log('Not Logged in');
@@ -73,10 +72,14 @@
             function displayElements(isLoggedIn) {
                 if (isLoggedIn) {
                     document.getElementById('logoutButton').setAttribute('style', 'display:block');
+                    document.getElementById('getLongLivedPageTokenButton').setAttribute('style', 'display:block');
+                    document.getElementById('displayPageFeedButton').setAttribute('style', 'display:block');
                     document.getElementById('pageFeed').setAttribute('style', 'display:block');
                 }
                 else {
                     document.getElementById('logoutButton').setAttribute('style', 'display:none');
+                    document.getElementById('getLongLivedPageTokenButton').setAttribute('style', 'display:none');
+                    document.getElementById('displayPageFeedButton').setAttribute('style', 'display:none');
                     document.getElementById('pageFeed').setAttribute('style', 'display:none');
                 }
             }
@@ -102,8 +105,16 @@
             var pageTokenList = [];
             var pageJSONList = [];
 
+            // Get long-lived page token
+            async function getLongLivedPageToken() {
+                var loginStateJSON = await checkLoginState();
+                console.access_token(loginStateJSON);
+            }
+
             // Display page feed
             async function displayPageFeed() {
+                document.getElementById('displayPageFeedButton').setAttribute('style', 'display:none');
+
                 // Get the list of pages that the user admins
                 var pageListJSON = await getPageListFromAPI();
 
@@ -247,19 +258,19 @@
                 }
             }
 
-            // Get long-lived user access token
-            function getLongLivedUserAccessToken(shortLivedUserAccessToken) {
+            // Get long-lived user token
+            function getLongLivedUserToken(shortLivedUserToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/oauth/access_token', 'get', { "grant_type":"fb_exchange_token","client_id":"1650600928436459","client_secret":"f8d40718a62d9f808819656d37e5dd8f","fb_exchange_token":shortLivedUserAccessToken }, function(response) {
+                    FB.api('/oauth/access_token', 'get', { "grant_type":"fb_exchange_token","client_id":"1650600928436459","client_secret":"f8d40718a62d9f808819656d37e5dd8f","fb_exchange_token":shortLivedUserToken }, function(response) {
                         resolve(response);
                     });
                 });
             }
 
             // Get page list from API
-            function getPageListFromAPI() {
+            function getPageListFromAPI(userToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/me?fields=accounts', function(response) {
+                    FB.api('/me?fields=accounts', { access_token:userToken }, function(response) {
                         resolve(response);
                     });
                 });
@@ -322,6 +333,16 @@
         </nav>
 
         <div class="container">
+            <!-- Get Long-lived Page Token Button -->
+            <div>
+                <button id="getLongLivedPageTokenButton" onclick="getLongLivedPageToken();" style="display:none">Get Long-lived Page Token</button>
+            </div>
+
+            <!-- Display Page Feed Button -->
+            <div>
+                <button id="displayPageFeedButton" onclick="displayPageFeed();" style="display:none">Display Page Feed</button>
+            </div>
+
             <!-- Page Feed -->
             <div id="pageFeed"></div>
         </div>
