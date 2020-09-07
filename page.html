@@ -149,10 +149,10 @@
 
                 var response = await getPageFeedFromAPI(canteenPageId, canteenPageToken);
                 canteenPageJSON = response;
-                console.log(canteenPageJSON);
 
                 if(canteenPageJSON && !canteenPageJSON.error) {
                     console.log(canteenPageJSON.name + ' Feed:');
+                    console.log(canteenPageJSON);
 
                     if (canteenPageJSON.feed) {
                         // Name
