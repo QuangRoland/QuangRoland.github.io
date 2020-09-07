@@ -116,7 +116,7 @@
                     var pageJSON = await getPageFromAPI(longLivedUserTokenJSON.access_token);
 
                     if(pageJSON && !pageJSON.error) {
-                        console.log('Page JSON:');
+                        console.log('Page Token JSON:');
                         console.log(pageJSON);
 
                         if (pageJSON.accounts) {
