@@ -120,10 +120,8 @@
                         console.log(pageJSON);
 
                         if (pageJSON.accounts) {
-                            canteenPageId = pageJSON.accounts.data.id;
-                            canteenPageToken = pageJSON.accounts.data.access_token;
-                            console.log(canteenPageId);
-                            console.log(canteenPageToken);
+                            canteenPageId = pageJSON.accounts.data[0].id;
+                            canteenPageToken = pageJSON.accounts.data[0].access_token;
                         }
                     }
                     else {
