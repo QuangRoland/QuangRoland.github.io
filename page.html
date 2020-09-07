@@ -273,7 +273,7 @@
                 });
             }
 
-            // Get page list from API
+            // Get page from API
             function getPageFromAPI(userToken) {
                 return new Promise((resolve, reject) => {
                     FB.api('/me?fields=accounts', { access_token:userToken }, function(response) {
