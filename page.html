@@ -155,7 +155,7 @@
 
                 for (let i in pageIdList) {
                     // Get the feed of a page in the list
-                    var response = await getPageFeedFromAPI(pageIdList[i]);
+                    var response = await getPageFeedFromAPI(pageIdList[i], pageTokenList[i]);
                     pageJSONList.push(response);
                     console.log("i = " + i);
                     console.log(response);
@@ -204,7 +204,7 @@
                                     }
 
                                     // Get total like count of the post
-                                    var pagePostLikeJSON = await getPagePostLikeFromAPI(pageJSONList[i].feed.data[j].id);
+                                    var pagePostLikeJSON = await getPagePostLikeFromAPI(pageJSONList[i].feed.data[j].id, pageTokenList[i]);
 
                                     if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
                                         var like = document.createElement('div');
@@ -291,18 +291,18 @@
             }
 
             // Get page feed from API
-            function getPageFeedFromAPI(pageId) {
+            function getPageFeedFromAPI(pageId, pageToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/' + pageId + '?fields=name,feed{id,message,permalink_url,comments{message}}', function(response) {
+                    FB.api('/' + pageId + '?fields=name,feed{id,message,permalink_url,comments{message}}', { access_token:pageToken }, function(response) {
                         resolve(response);
                     });
                 });
             }
 
             // Get page post like from API
-            function getPagePostLikeFromAPI(pagePostId) {
+            function getPagePostLikeFromAPI(pagePostId, pageToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/' + pagePostId + '?fields=id,message,likes.summary(total_count)', function(response) {
+                    FB.api('/' + pagePostId + '?fields=id,message,likes.summary(total_count)', { access_token:pageToken }, function(response) {
                         resolve(response);
                     });
                 });
