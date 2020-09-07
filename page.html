@@ -99,39 +99,9 @@
             }
 
             // Canteen page
-            var canteenPageId;
+            var canteenPageId = "121337816366331";
             var canteenPageToken;
             var canteenPageJSON;
-
-            // Get long-lived page token
-            async function getLongLivedPageToken() {
-                var loginStateJSON = await checkLoginState();
-
-                if (loginStateJSON.status === "connected") {
-                    var longLivedUserTokenJSON = await getLongLivedUserToken(loginStateJSON.authResponse.accessToken);
-                    
-                    // Get the page that user admins
-                    var pageJSON = await getPageFromAPI(longLivedUserTokenJSON.access_token);
-
-                    if(pageJSON && !pageJSON.error) {
-                        console.log('Page Token JSON:');
-                        console.log(pageJSON);
-
-                        if (pageJSON.accounts) {
-                            canteenPageId = pageJSON.accounts.data[0].id;
-                            canteenPageToken = pageJSON.accounts.data[0].access_token;
-                        }
-                    }
-                    else {
-                        console.log("Error:");
-                        console.log(pageJSON);
-                    }
-                }
-                else {
-                    console.log("Error:");
-                    console.log(loginStateJSON);
-                }
-            }
 
             // Display page feed
             async function displayPageFeed() {
@@ -142,8 +112,7 @@
                     console.log('Page Token JSON:');
                     console.log(pageJSON);
 
-                    if (pageJSON.accounts) {
-                        canteenPageId = pageJSON.accounts.data[0].id;
+                    if (pageJSON.accounts && pageJSON.accounts.data[0].id === "121337816366331") {
                         canteenPageToken = pageJSON.accounts.data[0].access_token;
                     }
                 }
@@ -216,60 +185,64 @@
                                 }
 
                                 // Like page post
-                                var likePagePostButtonDiv = document.createElement('div');
-                                post.appendChild(likePagePostButtonDiv);
+                                if (canteenPageToken) {
+                                    var likePagePostButtonDiv = document.createElement('div');
+                                    post.appendChild(likePagePostButtonDiv);
 
-                                var likePagePostButton = document.createElement("button");
-                                likePagePostButton.innerHTML = "Like Post";
-                                likePagePostButton.onclick = async function(){
-                                    var likePagePostJSON = await likePagePostThroughAPI(canteenPageJSON.feed.data[i].id, canteenPageToken);
+                                    var likePagePostButton = document.createElement("button");
+                                    likePagePostButton.innerHTML = "Like Post";
+                                    likePagePostButton.onclick = async function(){
+                                        var likePagePostJSON = await likePagePostThroughAPI(canteenPageJSON.feed.data[i].id, canteenPageToken);
 
-                                    if(likePagePostJSON && !likePagePostJSON.error) {
-                                        console.log('Successfully Like');
-                                    }
-                                    else {
-                                        console.log("Error:");
-                                        console.log(likePagePostJSON);
-                                    }
-                                };
-                                likePagePostButtonDiv.appendChild(likePagePostButton);
+                                        if(likePagePostJSON && !likePagePostJSON.error) {
+                                            console.log('Successfully Like');
+                                        }
+                                        else {
+                                            console.log("Error:");
+                                            console.log(likePagePostJSON);
+                                        }
+                                    };
+                                    likePagePostButtonDiv.appendChild(likePagePostButton);
+                                }
                             }
                         }
                     }
 
                     // Post to page
-                    // Post to page title
-                    var postToPageTitle = document.createElement('h1');
-                    postToPageTitle.innerHTML = "Post to " + canteenPageJSON.name;
-                    pageFeed.appendChild(postToPageTitle);
+                    if (canteenPageToken) {
+                        // Post to page title
+                        var postToPageTitle = document.createElement('h1');
+                        postToPageTitle.innerHTML = "Post to " + canteenPageJSON.name;
+                        pageFeed.appendChild(postToPageTitle);
 
-                    // Post to page message
-                    var postToPageMessageDiv = document.createElement('div');
-                    pageFeed.appendChild(postToPageMessageDiv);
+                        // Post to page message
+                        var postToPageMessageDiv = document.createElement('div');
+                        pageFeed.appendChild(postToPageMessageDiv);
 
-                    var postToPageMessage = document.createElement("input");
-                    postToPageMessage.setAttribute("type", "text");
-                    postToPageMessage.setAttribute("id", "postToPageMessage");
-                    postToPageMessageDiv.appendChild(postToPageMessage);
+                        var postToPageMessage = document.createElement("input");
+                        postToPageMessage.setAttribute("type", "text");
+                        postToPageMessage.setAttribute("id", "postToPageMessage");
+                        postToPageMessageDiv.appendChild(postToPageMessage);
 
-                    // Post to page button
-                    var postToPageButtonDiv = document.createElement('div');
-                    pageFeed.appendChild(postToPageButtonDiv);
+                        // Post to page button
+                        var postToPageButtonDiv = document.createElement('div');
+                        pageFeed.appendChild(postToPageButtonDiv);
 
-                    var postToPageButton = document.createElement("button");
-                    postToPageButton.innerHTML = "Post to Page";
-                    postToPageButton.onclick = async function(){
-                        var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage').value, canteenPageId, canteenPageToken);
+                        var postToPageButton = document.createElement("button");
+                        postToPageButton.innerHTML = "Post to Page";
+                        postToPageButton.onclick = async function(){
+                            var postToPageJSON = await postToPageThroughAPI(document.getElementById('postToPageMessage').value, canteenPageId, canteenPageToken);
 
-                        if(postToPageJSON && !postToPageJSON.error) {
-                            console.log('Successfully Post');
-                        }
-                        else {
-                            console.log("Error:");
-                            console.log(postToPageJSON);
-                        }
-                    };
-                    postToPageButtonDiv.appendChild(postToPageButton);
+                            if(postToPageJSON && !postToPageJSON.error) {
+                                console.log('Successfully Post');
+                            }
+                            else {
+                                console.log("Error:");
+                                console.log(postToPageJSON);
+                            }
+                        };
+                        postToPageButtonDiv.appendChild(postToPageButton);
+                    }
                 }
                 else {
                     console.log("Error:");
