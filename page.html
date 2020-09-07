@@ -147,7 +147,7 @@
                 title.innerHTML = "Page Feed";
                 pageFeed.appendChild(title);
 
-                var response = await getPageFeedFromAPI(canteenPageId);
+                var response = await getPageFeedFromAPI(canteenPageId, canteenPageToken);
                 canteenPageJSON = response;
 
                 if(canteenPageJSON && !canteenPageJSON.error) {
@@ -194,7 +194,7 @@
                                 }
 
                                 // Get total like count of the post
-                                var pagePostLikeJSON = await getPagePostLikeFromAPI(canteenPageJSON.feed.data[i].id);
+                                var pagePostLikeJSON = await getPagePostLikeFromAPI(canteenPageJSON.feed.data[i].id, canteenPageToken);
 
                                 if(pagePostLikeJSON && !pagePostLikeJSON.error && pagePostLikeJSON.likes.summary.total_count > 0) {
                                     var like = document.createElement('div');
