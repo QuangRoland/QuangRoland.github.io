@@ -93,7 +93,7 @@
                 return new Promise((resolve, reject) => {
                     FB.login(function(response) {
                         resolve(response);
-                    }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_engagement, pages_manage_posts, pages_read_engagement, pages_read_user_content'});
+                    }, {scope: 'public_profile, user_gender, user_birthday, user_hometown, email, user_link, user_posts, pages_show_list, pages_manage_posts, pages_manage_metadata, pages_read_engagement, pages_manage_engagement, pages_read_user_content'});
                 });
             }
 
