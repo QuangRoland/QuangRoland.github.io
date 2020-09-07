@@ -10,7 +10,7 @@
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
         crossorigin="anonymous">
 
-        <title>Quang Test API</title>
+        <title>Canteen App</title>
     </head>
     <body>
         <!-- Bootstrap JavaScript -->
@@ -27,7 +27,7 @@
         <script>
             window.fbAsyncInit = async function() {
                 FB.init({
-                    appId      : '1650600928436459',
+                    appId      : '358441765246257',
                     cookie     : true,
                     xfbml      : true,
                     version    : 'v8.0'
@@ -104,11 +104,6 @@
             var pageIdList = [];
             var pageTokenList = [];
             var pageJSONList = [];
-
-            pageIdList[0] = "100363751794472";
-            pageIdList[1] = "108591264296711";
-            pageTokenList[0] = "EAAXdNnoBYOsBAKBM9Bu4WWP7BccOYZBH62UmHHtBQTPiPOYQf2jjmDQnahspeIg92ZA3wplliGkImRZBJABXqKa6FB54KhWAYPgSLWMDqzmzHMEZBBeF7y9usyJZAlBMoZCi7Qg0cMltwTly6z2h5hPVCPBMe9ZCPFvr8YVNwegZBwZDZD";
-            pageTokenList[1] = "EAAXdNnoBYOsBACnkrzi6iv6ZAFKrtxrluZC4a9r1aLcCcAR2GZAxuxpjSUa2PghmpR6SAEYLwNA4wYZBV7gQ9irUBsfwCALlKHYeaflm3fa2Xekj6pZAdfJwrz4roWJHUjJxCBx4k5jD5BnAlHF6TSXbWPxo75zZBXaGtaR9RjgAZDZD";
 
             // Get long-lived page token
             async function getLongLivedPageToken() {
@@ -274,7 +269,7 @@
             // Get long-lived user token
             function getLongLivedUserToken(shortLivedUserToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/oauth/access_token', 'get', { "grant_type":"fb_exchange_token","client_id":"1650600928436459","client_secret":"f8d40718a62d9f808819656d37e5dd8f","fb_exchange_token":shortLivedUserToken }, function(response) {
+                    FB.api('/oauth/access_token', 'get', { "grant_type":"fb_exchange_token","client_id":"358441765246257","client_secret":"5b85e65ab644a281e61556eadae7ee1d","fb_exchange_token":shortLivedUserToken }, function(response) {
                         resolve(response);
                     });
                 });
