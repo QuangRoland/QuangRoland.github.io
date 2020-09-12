@@ -225,9 +225,10 @@
                                 // Get comment
                                 if (canteenPageJSON.feed.data[i].comments) {
                                     for (let j in canteenPageJSON.feed.data[i].comments.data) {
-                                        if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";id=" + userId + ";name=" + userName + ";"))) {
+                                        if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";;id=" + userId + ";name=" + userName + ";"))) {
                                             var comment = document.createElement('div');
-                                            comment.innerHTML = 'Comment: ' + canteenPageJSON.feed.data[i].comments.data[j].message;
+                                            var commentMessage = canteenPageJSON.feed.data[i].comments.data[j].message.split(";;");
+                                            comment.innerHTML = 'Comment: ' + commentMessage[0];
                                             post.appendChild(comment);
 
                                             // Reply to comment
@@ -247,7 +248,7 @@
                                             var replyToCommentButton = document.createElement("button");
                                             replyToCommentButton.innerHTML = "Reply";
                                             replyToCommentButton.onclick = async function(){
-                                                var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";id=" + userId + ";name=" + userName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
+                                                var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";;id=" + userId + ";name=" + userName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
 
                                                 if(replyToCommentJSON && !replyToCommentJSON.error) {
                                                     console.log('Successfully Reply to Comment');
