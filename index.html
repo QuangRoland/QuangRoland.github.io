@@ -145,6 +145,7 @@
 
             // Canteen page
             var canteenPageId = "111411690697844";
+            var canteenPageName = "Quang Canteen";
             var canteenPageToken = "EAAFGADoXFTEBAIZCxEEbWvdLDN8BziSyMkW4IISCUZAbDq1WlcU8QqDIicZCSj16Coa8hTDWncPFIGf4g1yO2p1P2ZBZAKV3Od8ipChMvKAQrl1NEjqL8EliB3NHic94tQbizJm3J6cg1lnucZA1f8tY6IF7Dm4vPsaH5zwMBZAowZDZD";
             var canteenPageJSON;
 
@@ -226,6 +227,7 @@
                                 if (canteenPageJSON.feed.data[i].comments) {
                                     for (let j in canteenPageJSON.feed.data[i].comments.data) {
                                         if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";;" + userId + ";" + userName + ";"))) {
+                                            
                                             var comment = document.createElement('div');
                                             var tempComment = canteenPageJSON.feed.data[i].comments.data[j].message.split(";;");
                                             var tempComment2 = tempComment[1].split(";");
@@ -246,7 +248,7 @@
                                             }
 
                                             // Reply to comment
-                                            // Reply to comment message 
+                                            // Reply to comment message
                                             var replyToCommentMessageDiv = document.createElement('div');
                                             post.appendChild(replyToCommentMessageDiv);
 
@@ -262,7 +264,13 @@
                                             var replyToCommentButton = document.createElement("button");
                                             replyToCommentButton.innerHTML = "Reply";
                                             replyToCommentButton.onclick = async function(){
-                                                var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";;" + userId + ";" + userName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
+                                                if (isAdmin) {
+                                                    var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";;" + canteenPageId + ";" + canteenPageName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
+                                                }
+                                                else {
+                                                    var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";;" + userId + ";" + userName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
+                                                }
+
 
                                                 if(replyToCommentJSON && !replyToCommentJSON.error) {
                                                     console.log('Successfully Reply to Comment');
@@ -283,7 +291,7 @@
                                 commentToPostTitle.innerHTML = "Comment to this post";
                                 post.appendChild(commentToPostTitle);
 
-                                // Comment to post message 
+                                // Comment to post message
                                 var commentToPostMessageDiv = document.createElement('div');
                                 post.appendChild(commentToPostMessageDiv);
 
@@ -299,7 +307,12 @@
                                 var commentToPostButton = document.createElement("button");
                                 commentToPostButton.innerHTML = "Comment";
                                 commentToPostButton.onclick = async function(){
-                                    var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + ";;" + userId + ";" + userName + ";", canteenPageJSON.feed.data[i].id, canteenPageToken);
+                                    if (isAdmin) {
+                                        var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + ";;" + canteenPageId + ";" + canteenPageName + ";", canteenPageJSON.feed.data[i].id, canteenPageToken);
+                                    }
+                                    else {
+                                        var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + ";;" + userId + ";" + userName + ";", canteenPageJSON.feed.data[i].id, canteenPageToken);
+                                    }
 
                                     if(commentToPostJSON && !commentToPostJSON.error) {
                                         console.log('Successfully Comment');
