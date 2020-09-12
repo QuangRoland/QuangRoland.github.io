@@ -237,9 +237,9 @@
                                             console.log(commentJSON);
 
                                             if(commentJSON && !commentJSON.error) {
-                                                for (let k in commentJSON.comments.data) {
+                                                for (let k in commentJSON.data) {
                                                     var replyComment = document.createElement('div');
-                                                    var tempReplyComment = commentJSON.comments.data[k].message.split(";;");
+                                                    var tempReplyComment = commentJSON.data[k].message.split(";;");
                                                     var tempReplyComment2 = tempReplyComment[1].split(";");
                                                     replyComment.innerHTML = '- Rely from ' + tempReplyComment2[1] + ": " + tempReplyComment[0];
                                                     post.appendChild(replyComment);
@@ -401,7 +401,7 @@
             // Get comment from API
             function getCommentFromAPI(objectId) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/' + objectId + '?fields=comments', function(response) {
+                    FB.api('/' + objectId + '/comments', function(response) {
                         resolve(response);
                     });
                 });
