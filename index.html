@@ -225,10 +225,7 @@
                                 // Get comment
                                 if (canteenPageJSON.feed.data[i].comments) {
                                     for (let j in canteenPageJSON.feed.data[i].comments.data) {
-                                        if (canteenPageJSON.feed.data[i].comments.data[j].message) {
-                                            var commentJSON = await getCommentInfoFromAPI(canteenPageJSON.feed.data[i].id, canteenPageToken);
-                                            console.log(commentJSON);
-
+                                        if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";id=" + userId + ";name=" + userName + ";"))) {
                                             var comment = document.createElement('div');
                                             comment.innerHTML = 'Comment: ' + canteenPageJSON.feed.data[i].comments.data[j].message;
                                             post.appendChild(comment);
@@ -250,7 +247,7 @@
                                             var replyToCommentButton = document.createElement("button");
                                             replyToCommentButton.innerHTML = "Reply";
                                             replyToCommentButton.onclick = async function(){
-                                                var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value, canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
+                                                var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";id=" + userId + ";name=" + userName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
 
                                                 if(replyToCommentJSON && !replyToCommentJSON.error) {
                                                     console.log('Successfully Reply to Comment');
@@ -287,7 +284,7 @@
                                 var commentToPostButton = document.createElement("button");
                                 commentToPostButton.innerHTML = "Comment";
                                 commentToPostButton.onclick = async function(){
-                                    var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value, canteenPageJSON.feed.data[i].id, canteenPageToken);
+                                    var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + ";id=" + userId + ";name=" + userName + ";", canteenPageJSON.feed.data[i].id, canteenPageToken);
 
                                     if(commentToPostJSON && !commentToPostJSON.error) {
                                         console.log('Successfully Comment');
@@ -375,15 +372,6 @@
             function getPageFeedFromAPI(pageId, pageToken) {
                 return new Promise((resolve, reject) => {
                     FB.api('/' + pageId + '?fields=name,feed{id,message,permalink_url,comments{message}}', { access_token:pageToken }, function(response) {
-                        resolve(response);
-                    });
-                });
-            }
-
-            // Get comment info from API
-            function getCommentInfoFromAPI(postId, pageToken) {
-                return new Promise((resolve, reject) => {
-                    FB.api('/' + postId + '/comments' + '?fields=message, from', { access_token:pageToken }, function(response) {
                         resolve(response);
                     });
                 });
