@@ -234,7 +234,7 @@
                                             comment.innerHTML = 'Comment from ' + tempComment2[1] + ": " + tempComment[0];
                                             post.appendChild(comment);
 
-                                            // Get reply
+                                            // Get reply comment
                                             var commentJSON = await getCommentFromAPI(canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
 
                                             if(commentJSON && !commentJSON.error) {
