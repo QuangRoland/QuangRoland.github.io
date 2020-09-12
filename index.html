@@ -226,7 +226,7 @@
                                 // Get comment
                                 if (canteenPageJSON.feed.data[i].comments) {
                                     for (let j in canteenPageJSON.feed.data[i].comments.data) {
-                                        if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";;" + userId + ";" + userName + ";"))) {
+                                        if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";;" + userId + ";" + userName + ";") || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";;" + canteenPageId + ";" + canteenPageName + ";"))) {
                                             
                                             var comment = document.createElement('div');
                                             var tempComment = canteenPageJSON.feed.data[i].comments.data[j].message.split(";;");
