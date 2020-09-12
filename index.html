@@ -233,7 +233,7 @@
                                             post.appendChild(comment);
 
                                             // Get reply
-                                            var commentJSON = await getCommentFromAPI(canteenPageJSON.feed.data[i].id);
+                                            var commentJSON = await getCommentFromAPI(canteenPageJSON.feed.data[i].comments.data[j].id);
                                             console.log(commentJSON);
 
                                             if(commentJSON && !commentJSON.error) {
