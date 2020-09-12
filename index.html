@@ -233,8 +233,7 @@
                                             post.appendChild(comment);
 
                                             // Get reply
-                                            var commentJSON = await getCommentFromAPI(canteenPageJSON.feed.data[i].comments.data[j].id);
-                                            console.log(commentJSON);
+                                            var commentJSON = await getCommentFromAPI(canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
 
                                             if(commentJSON && !commentJSON.error) {
                                                 for (let k in commentJSON.data) {
@@ -394,9 +393,9 @@
             }
 
             // Get comment from API
-            function getCommentFromAPI(objectId) {
+            function getCommentFromAPI(objectId, pageToken) {
                 return new Promise((resolve, reject) => {
-                    FB.api('/' + objectId + '/comments', function(response) {
+                    FB.api('/' + objectId + '/comments', { access_token:pageToken }, function(response) {
                         resolve(response);
                     });
                 });
