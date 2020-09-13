@@ -226,10 +226,10 @@
                                 // Get comment
                                 if (canteenPageJSON.feed.data[i].comments) {
                                     for (let j in canteenPageJSON.feed.data[i].comments.data) {
-                                        if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";;" + userId + ";" + userName + ";") || canteenPageJSON.feed.data[i].comments.data[j].message.includes(";;" + canteenPageId + ";" + canteenPageName + ";"))) {
+                                        if (canteenPageJSON.feed.data[i].comments.data[j].message && (isAdmin || canteenPageJSON.feed.data[i].comments.data[j].message.includes("; [" + userId + ";" + userName + ";]") || canteenPageJSON.feed.data[i].comments.data[j].message.includes("; [" + canteenPageId + ";" + canteenPageName + ";]"))) {
                                             
                                             var comment = document.createElement('div');
-                                            var tempComment = canteenPageJSON.feed.data[i].comments.data[j].message.split(";;");
+                                            var tempComment = canteenPageJSON.feed.data[i].comments.data[j].message.split("; [");
                                             var tempComment2 = tempComment[1].split(";");
                                             comment.innerHTML = 'Comment from ' + tempComment2[1] + ": " + tempComment[0];
                                             post.appendChild(comment);
@@ -240,7 +240,7 @@
                                             if(commentJSON && !commentJSON.error) {
                                                 for (let k in commentJSON.data) {
                                                     var replyComment = document.createElement('div');
-                                                    var tempReplyComment = commentJSON.data[k].message.split(";;");
+                                                    var tempReplyComment = commentJSON.data[k].message.split("; [");
                                                     var tempReplyComment2 = tempReplyComment[1].split(";");
                                                     replyComment.innerHTML = '- Reply from ' + tempReplyComment2[1] + ": " + tempReplyComment[0];
                                                     post.appendChild(replyComment);
@@ -265,10 +265,10 @@
                                             replyToCommentButton.innerHTML = "Reply";
                                             replyToCommentButton.onclick = async function(){
                                                 if (isAdmin) {
-                                                    var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";;" + canteenPageId + ";" + canteenPageName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
+                                                    var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + "; [" + canteenPageId + ";" + canteenPageName + ";]", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
                                                 }
                                                 else {
-                                                    var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + ";;" + userId + ";" + userName + ";", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
+                                                    var replyToCommentJSON = await commentThroughAPI(document.getElementById('replyToCommentMessage' + i + "and" + j).value + "; [" + userId + ";" + userName + ";]", canteenPageJSON.feed.data[i].comments.data[j].id, canteenPageToken);
                                                 }
 
 
@@ -308,10 +308,10 @@
                                 commentToPostButton.innerHTML = "Comment";
                                 commentToPostButton.onclick = async function(){
                                     if (isAdmin) {
-                                        var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + ";;" + canteenPageId + ";" + canteenPageName + ";", canteenPageJSON.feed.data[i].id, canteenPageToken);
+                                        var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + "; [" + canteenPageId + ";" + canteenPageName + ";]", canteenPageJSON.feed.data[i].id, canteenPageToken);
                                     }
                                     else {
-                                        var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + ";;" + userId + ";" + userName + ";", canteenPageJSON.feed.data[i].id, canteenPageToken);
+                                        var commentToPostJSON = await commentThroughAPI(document.getElementById('commentToPostMessage' + i).value + "; [" + userId + ";" + userName + ";]", canteenPageJSON.feed.data[i].id, canteenPageToken);
                                     }
 
                                     if(commentToPostJSON && !commentToPostJSON.error) {
